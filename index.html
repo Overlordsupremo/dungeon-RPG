@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Action RPG: Realtime Legends Fixed</title>
+    <title>Retro Action MMORPG: Evolution Edition</title>
     <style>
         * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; image-rendering: pixelated; }
         body { background-color: #161110; color: #f4edd4; margin: 0; padding: 12px; user-select: none; }
         h1, h2, h3, h4 { color: #ff453a; text-shadow: 2px 2px #000; margin: 0 0 8px 0; text-transform: uppercase; }
         
-        .grid-layout { display: grid; grid-template-columns: 480px 1fr; gap: 12px; max-width: 1600px; margin: 0 auto; }
-        @media (max-width: 1100px) { .grid-layout { grid-template-columns: 1fr; } }
+        .grid-layout { display: grid; grid-template-columns: 520px 1fr; gap: 12px; max-width: 1600px; margin: 0 auto; }
+        @media (max-width: 1200px) { .grid-layout { grid-template-columns: 1fr; } }
         
         .panel { background: #231a16; border: 4px solid #0f0a08; outline: 4px solid #3a2a24; padding: 12px; margin: 4px; box-shadow: 0 6px 0 #000; }
         
-        .mmo-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 12px; }
-        .mmo-tabs button { padding: 8px 2px; font-size: 11px; background: #32231d; border: 2px solid #0f0a08; color: #f4edd4; cursor: pointer; font-weight: bold; }
+        .mmo-tabs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; margin-bottom: 12px; }
+        .mmo-tabs button { padding: 8px 1px; font-size: 10px; background: #32231d; border: 2px solid #0f0a08; color: #f4edd4; cursor: pointer; font-weight: bold; }
         .mmo-tabs button.active { background: #bd3a28; border-color: #ff453a; color: #fff; }
 
         .game-screen { background: #1c120c; border: 4px solid #0f0a08; outline: 4px solid #4a3831; padding: 8px; position: relative; }
-        #canvas-container { position: relative; width: 100%; background: #080504; border: 4px solid #0f0a08; overflow: hidden; height: 360px; cursor: crosshair; }
+        #canvas-container { position: relative; width: 100%; background: #080504; border: 4px solid #0f0a08; overflow: hidden; height: 400px; cursor: crosshair; }
         canvas { display: block; width: 100%; height: 100%; }
         
         .bar { background: #0f0a08; width: 100%; height: 22px; border: 2px solid #3a2a24; margin: 4px 0; overflow: hidden; position: relative; }
@@ -30,13 +30,13 @@
         .bar-text { position: absolute; width: 100%; text-align: center; font-size: 11px; font-weight: bold; line-height: 18px; color: #fff; text-shadow: 1px 1px 2px #000; }
 
         .flex-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 6px; background: #32231d; border: 2px solid #0f0a08; font-size: 11px; }
-        .log-terminal { background: #080504; border: 2px solid #0f0a08; height: 95px; overflow-y: auto; padding: 6px; font-size: 11px; color: #bcae97; }
+        .log-terminal { background: #080504; border: 2px solid #0f0a08; height: 110px; overflow-y: auto; padding: 6px; font-size: 11px; color: #bcae97; }
         
         .hotbar-container { display: flex; justify-content: center; gap: 8px; background: #0f0a08; padding: 8px; border: 3px solid #3a2a24; margin-top: 8px; }
-        .hotbar-slot { width: 50px; height: 50px; background: #2d1f19; border: 2px solid #5a4338; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
+        .hotbar-slot { width: 55px; height: 55px; background: #2d1f19; border: 2px solid #5a4338; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
         .hotbar-slot:hover { border-color: #ff453a; background: #3a2a24; }
         .hotbar-key { position: absolute; top: 1px; left: 3px; font-size: 9px; color: #ffcc00; font-weight: bold; }
-        .hotbar-icon { font-size: 18px; margin-top: 4px; }
+        .hotbar-icon { font-size: 20px; margin-top: 4px; }
         .hotbar-lvl { position: absolute; bottom: 1px; right: 3px; font-size: 9px; color: #5ac8fa; }
 
         button.action-btn { background: #962d1f; border: 2px solid #0f0a08; color: white; font-weight: bold; cursor: pointer; padding: 5px 10px; text-transform: uppercase; font-size: 10px; }
@@ -48,11 +48,13 @@
         .status-table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 10px; background: #080504; }
         .status-table th, .status-table td { border: 1px solid #3a2a24; padding: 5px; text-align: left; }
         .status-table th { background: #32231d; color: #ffcc00; }
+        
+        .forge-box { background: #1c1310; border: 2px solid #0f0a08; padding: 10px; margin-bottom: 6px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <h1 style="text-align: center; font-size: 20px; margin-bottom: 8px;">⚔️ RETRO ACTION MMORPG ⚔️</h1>
+    <h1 style="text-align: center; font-size: 20px; margin-bottom: 8px;">⚔️ RETRO ACTION MMORPG: EVOLUTION ⚔️</h1>
 
     <div class="grid-layout">
         
@@ -60,6 +62,7 @@
             <div class="mmo-tabs">
                 <button id="tab-hero" class="active" onclick="switchMmoTab('hero')">👤 Herói</button>
                 <button id="tab-skills" onclick="switchMmoTab('skills')">📜 Skills</button>
+                <button id="tab-forge" onclick="switchMmoTab('forge')">🔨 Forja</button>
                 <button id="tab-shop" onclick="switchMmoTab('shop')">🧙 Mago</button>
                 <button id="tab-world" onclick="switchMmoTab('world')">🌌 Portais</button>
                 <button id="tab-adm" onclick="switchMmoTab('adm')" style="border-color:#bd28a9; color:#ff7bf2;">⚙️ ADM</button>
@@ -98,24 +101,38 @@
                     <div class="flex-row" style="margin:0;"><span>🛡️ Defesa: <b id="lbl-def">10</b></span> <button onclick="buyStat('def')">+</button></div>
                 </div>
 
-                <h4 style="margin-top:8px;">📜 Guia de Efeitos dos Status</h4>
-                <table class="status-table">
-                    <tr><th>Status</th><th>O que melhora e modifica no herói</th></tr>
-                    <tr><td><b>💪 Força</b></td><td>Aumenta o dano do clique do mouse e dá +10 HP máx.</td></tr>
-                    <tr><td><b>⚡ Agilidade</b></td><td>Aumenta a velocidade de movimento do herói.</td></tr>
-                    <tr><td><b>🔮 Magia</b></td><td>Aumenta o tamanho e dano dos efeitos visuais das habilidades.</td></tr>
-                    <tr><td><b>🧠 Intel.</b></td><td>Dá +8 de MP máximo por ponto para conjurar mais magias.</td></tr>
-                    <tr><td><b>🍀 Sorte</b></td><td>Aumenta a chance de acerto Crítico (Dano Dobrado!).</td></tr>
-                    <tr><td><b>🛡️ Defesa</b></td><td>Reduz de forma direta todo dano recebido pelos monstros.</td></tr>
-                </table>
+                <h4 style="margin-top:8px;">📜 Status de Equipamentos (Forja)</h4>
+                <div class="flex-row" style="background:#080504;">
+                    <span>Ataque da Arma: <b id="lbl-forge-atk" style="color:#ff9500">+0</b></span>
+                    <span>Defesa da Armadura: <b id="lbl-forge-def" style="color:#34c759">+0</b></span>
+                </div>
             </div>
 
             <div id="view-skills" class="tab-content" style="display:none;">
-                <h3>📜 Árvore de Habilidades</h3>
+                <h3>📜 Árvore de Habilidades (5 Por Classe)</h3>
                 <p style="font-size:11px; color:#ffcc00; background:#080504; padding:4px;">
                     Pontos de Skill desta classe: <span id="lbl-skill-points">0</span>
                 </p>
-                <div id="box-talents"></div>
+                <div id="box-talents" style="max-height:280px; overflow-y:auto;"></div>
+            </div>
+
+            <div id="view-forge" class="tab-content" style="display:none;">
+                <h3>🔨 Bigorna Lendária</h3>
+                <p style="font-size:11px; color:#bcae97;">Melhore seus equipamentos consumindo ouro. O bônus é permanente para todas as classes!</p>
+                
+                <div class="forge-box">
+                    <h4>⚔️ Refinar Espada / Cajado / Arco</h4>
+                    <p>Nível Atual: <span id="forge-weapon-lvl" style="color:#ffcc00; font-weight:bold;">0</span></p>
+                    <p style="font-size:11px; color:#34c759;">Efeito: +<span id="forge-weapon-bonus">0</span> de Dano Geral</p>
+                    <button class="action-btn" id="btn-forge-weapon" onclick="upgradeForge('weapon')">Melhorar (Custo: 50g)</button>
+                </div>
+
+                <div class="forge-box">
+                    <h4>🛡️ Refinar Armadura de Placas / Manto</h4>
+                    <p>Nível Atual: <span id="forge-armor-lvl" style="color:#34c759; font-weight:bold;">0</span></p>
+                    <p style="font-size:11px; color:#34c759;">Efeito: +<span id="forge-armor-bonus">0</span> de Defesa Geral</p>
+                    <button class="action-btn" id="btn-forge-armor" onclick="upgradeForge('armor')">Melhorar (Custo: 50g)</button>
+                </div>
             </div>
 
             <div id="view-shop" class="tab-content" style="display:none;">
@@ -127,8 +144,8 @@
             </div>
 
             <div id="view-world" class="tab-content" style="display:none;">
-                <h3>🌌 Seleção de Instâncias</h3>
-                <div id="portal-triggers" style="display:grid; gap:4px;"></div>
+                <h3>🌌 Seleção de Instâncias Expandida</h3>
+                <div id="portal-triggers" style="display:grid; gap:4px; max-height:280px; overflow-y:auto;"></div>
             </div>
 
             <div id="view-adm" class="tab-content" style="display:none;">
@@ -143,27 +160,15 @@
                         <input type="number" id="adm-set-lvl" class="adm-input" oninput="admModify('lvl')">
                     </div>
                     <div>
-                        <label>Dar Pontos de Status:</label>
+                        <label>Pontos Status:</label>
                         <button class="action-btn" onclick="player.points += 10; renderUI();" style="width:100%; margin-top:2px; background:#bd28a9;">+10 Atributos</button>
                     </div>
                     <div>
-                        <label>Dar Pontos de Skill:</label>
+                        <label>Pontos Skill:</label>
                         <button class="action-btn" onclick="classSkillPoints[player.currentClass] += 5; renderSkillsTab(); renderUI();" style="width:100%; margin-top:2px; background:#bd28a9;">+5 PTS Skill</button>
                     </div>
-                    <div>
-                        <label>Movimentação:</label>
-                        <select id="adm-set-keys" class="adm-input" onchange="admModify('keys')">
-                            <option value="ambos">WASD + Setas</option>
-                            <option value="wasd">Apenas WASD</option>
-                            <option value="setas">Apenas Setas</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Invencibilidade ADM:</label>
-                        <button class="action-btn" onclick="player.hp = 99999; player.maxHp = 99999; renderUI();" style="width:100%; margin-top:2px; background:#34c759;">Modo Deus</button>
-                    </div>
                 </div>
-                <button class="action-btn" onclick="spawnDebugMob()" style="width:100%; margin-top:8px; background:#ff9500;">Infundir Monstro de Teste Instantâneo</button>
+                <button class="action-btn" onclick="spawnDebugMob()" style="width:100%; margin-top:8px; background:#ff9500;">Invocação Instantânea</button>
             </div>
         </div>
 
@@ -212,43 +217,58 @@
     <script>
         const instances = [
             { id: 1, name: "Esgotos de Cobre", lvl: 1, boss: "🐀 Rei Rato", mobEmoji: "🐀" },
-            { id: 2, name: "Caverna Sombria", lvl: 5, boss: "🤖 Golem Titã", mobEmoji: "🕷️" },
-            { id: 3, name: "Catacumbas Velhas", lvl: 10, boss: "🧙‍♂️ Lich Mestre", mobEmoji: "💀" },
-            { id: 4, name: "Vulcão do Dragão", lvl: 18, boss: "🐉 Dragão Ignis", mobEmoji: "🔥" }
+            { id: 2, name: "Caverna Sombria", lvl: 5, boss: "🕷️ Rainha Aracnídea", mobEmoji: "🕷️" },
+            { id: 3, name: "Catacumbas Velhas", lvl: 10, boss: "💀 Lich Mestre", mobEmoji: "💀" },
+            { id: 4, name: "Vulcão do Dragão", lvl: 18, boss: "🐉 Dragão Ignis", mobEmoji: "🔥" },
+            { id: 5, name: "Vale dos Mortos", lvl: 25, boss: "👹 Ceifador de Almas", mobEmoji: "👻" },
+            { id: 6, name: "Abismo do Caos", lvl: 40, boss: "👾 Imperador Void", mobEmoji: "🔮" }
         ];
 
         const classEmojis = { "Guerreiro": "⚔️", "Mago": "🧙", "Arqueiro": "🏹", "Paladino": "🛡️", "Necromante": "🧟", "Assassino": "🥷" };
 
+        // 5 HABILIDADES UNITÁRIAS REESTRUTURADAS POR CLASSE
         const classSkillsData = {
             "Guerreiro": [
-                { name: "Corte Veloz", icon: "🪓", cost: 15, dmgMult: 1.8, type: "melee", reqLvl: 1 },
-                { name: "Frenesi", icon: "🔥", cost: 25, dmgMult: 2.5, type: "aoe", reqLvl: 3 },
-                { name: "Impacto Terrestre", icon: "🌋", cost: 40, dmgMult: 4.0, type: "aoe", reqLvl: 5 }
+                { name: "Golpe Impactante", icon: "🪓", cost: 12, dmgMult: 1.6, type: "melee", reqLvl: 1 },
+                { name: "Corte Rompedor", icon: "⚔️", cost: 22, dmgMult: 2.3, type: "melee", reqLvl: 3 },
+                { name: "Frenesi de Sangue", icon: "🔥", cost: 30, dmgMult: 3.0, type: "aoe", reqLvl: 6 },
+                { name: "Foco do Predador", icon: "💪", cost: 25, isBuff: true, stat: "str", amount: 15, reqLvl: 10 },
+                { name: "Impacto Terrestre", icon: "🌋", cost: 50, dmgMult: 5.5, type: "aoe", reqLvl: 15 }
             ],
             "Mago": [
-                { name: "Dardo de Gelo", icon: "❄️", cost: 20, dmgMult: 2.0, type: "projectile", reqLvl: 1 },
-                { name: "Bola de Fogo", icon: "☄️", cost: 35, dmgMult: 3.2, type: "projectile", reqLvl: 3 },
-                { name: "Trovão Sagrado", icon: "⚡", cost: 55, dmgMult: 5.0, type: "aoe", reqLvl: 5 }
+                { name: "Esfera Mágica", icon: "🔮", cost: 15, dmgMult: 1.8, type: "projectile", projType: "magic", reqLvl: 1 },
+                { name: "Dardo Congelante", icon: "❄️", cost: 25, dmgMult: 2.5, type: "projectile", projType: "ice", reqLvl: 4 },
+                { name: "Explosão de Fogo", icon: "☄️", cost: 40, dmgMult: 3.8, type: "aoe", reqLvl: 7 },
+                { name: "Meditação Cósmica", icon: "🧠", cost: 5, isHeal: true, amount: 30, reqLvl: 10 }, 
+                { name: "Apocalipse Relâmpago", icon: "⚡", cost: 65, dmgMult: 6.2, type: "aoe", reqLvl: 16 }
             ],
             "Arqueiro": [
-                { name: "Flecha Dupla", icon: "🏹", cost: 12, dmgMult: 1.6, type: "projectile", reqLvl: 1 },
-                { name: "Chuva de Flechas", icon: "🌧️", cost: 30, dmgMult: 2.8, type: "aoe", reqLvl: 3 },
-                { name: "Tiro Fatal", icon: "🎯", cost: 45, dmgMult: 4.5, type: "projectile", reqLvl: 5 }
+                { name: "Disparo Preciso", icon: "🏹", cost: 10, dmgMult: 1.5, type: "projectile", projType: "arrow", reqLvl: 1 },
+                { name: "Flecha Perfurante", icon: "💘", cost: 20, dmgMult: 2.4, type: "projectile", projType: "heavy-arrow", reqLvl: 3 },
+                { name: "Tiro Estilhaçante", icon: "💥", cost: 32, dmgMult: 3.2, type: "aoe", reqLvl: 6 },
+                { name: "Passo Leve", icon: "⚡", cost: 15, isBuff: true, stat: "agi", amount: 20, reqLvl: 9 },
+                { name: "Chuva de Flechas", icon: "🌧️", cost: 55, dmgMult: 5.0, type: "aoe", reqLvl: 14 }
             ],
             "Paladino": [
                 { name: "Golpe de Luz", icon: "☀️", cost: 15, dmgMult: 1.5, type: "melee", reqLvl: 1 },
-                { name: "Cura Divina", icon: "💖", cost: 30, isHeal: true, amount: 50, reqLvl: 2 },
-                { name: "Escudo Sagrado", icon: "🔱", cost: 40, dmgMult: 3.5, type: "aoe", reqLvl: 5 }
+                { name: "Cura Divina", icon: "💖", cost: 25, isHeal: true, amount: 60, reqLvl: 2 },
+                { name: "Escudo Radiante", icon: "🔱", cost: 35, dmgMult: 3.0, type: "aoe", reqLvl: 5 },
+                { name: "Bênção da Força", icon: "👑", cost: 30, isBuff: true, stat: "str", amount: 12, reqLvl: 10 },
+                { name: "Julgamento Final", icon: "⚖️", cost: 55, dmgMult: 4.8, type: "aoe", reqLvl: 15 }
             ],
             "Necromante": [
-                { name: "Toque Putrefato", icon: "🤮", cost: 15, dmgMult: 1.7, type: "melee", reqLvl: 1 },
-                { name: "Nuvem de Veneno", icon: "🤢", cost: 30, dmgMult: 2.6, type: "aoe", reqLvl: 3 },
-                { name: "Explosão de Cadáver", icon: "💥", cost: 50, dmgMult: 4.8, type: "aoe", reqLvl: 5 }
+                { name: "Toque Putrefato", icon: "🤮", cost: 15, dmgMult: 1.6, type: "melee", reqLvl: 1 },
+                { name: "Invocação Vil", icon: "💀", cost: 25, dmgMult: 2.4, type: "aoe", reqLvl: 4 },
+                { name: "Nuvem Tóxica", icon: "🤢", cost: 35, dmgMult: 3.5, type: "aoe", reqLvl: 8 },
+                { name: "Dreno de Vida", icon: "🧛", cost: 40, isHeal: true, amount: 45, reqLvl: 11 },
+                { name: "Explosão de Cadáver", icon: "💥", cost: 60, dmgMult: 5.2, type: "aoe", reqLvl: 16 }
             ],
             "Assassino": [
-                { name: "Apunhalar", icon: "🗡️", cost: 15, dmgMult: 2.2, type: "melee", reqLvl: 1 },
-                { name: "Lâmina Oculta", icon: "💨", cost: 25, dmgMult: 3.0, type: "melee", reqLvl: 3 },
-                { name: "Dança das Sombras", icon: "👥", cost: 50, dmgMult: 5.5, type: "aoe", reqLvl: 5 }
+                { name: "Apunhalar", icon: "🗡️", cost: 12, dmgMult: 2.0, type: "melee", reqLvl: 1 },
+                { name: "Lâmina Oculta", icon: "💨", cost: 22, dmgMult: 2.8, type: "melee", reqLvl: 3 },
+                { name: "Ataque Sombrio", icon: "👥", cost: 35, dmgMult: 4.0, type: "aoe", reqLvl: 7 },
+                { name: "Instinto Assassino", icon: "🍀", cost: 20, isBuff: true, stat: "luk", amount: 25, reqLvl: 10 },
+                { name: "Dança das Lâminas", icon: "⚔️", cost: 55, dmgMult: 6.0, type: "aoe", reqLvl: 15 }
             ]
         };
 
@@ -257,23 +277,21 @@
             lvl: 1, xp: 0, nextXp: 100, gold: 100,
             hp: 100, maxHp: 100, mp: 100, maxMp: 100,
             str: 10, agi: 10, mag: 10, int: 10, luk: 5, def: 10,
-            points: 0, currentClass: "Guerreiro", potions: []
+            points: 0, currentClass: "Guerreiro", potions: [],
+            forgeWeapon: 0, forgeArmor: 0
         };
 
         let classSkillPoints = { "Guerreiro": 0, "Mago": 0, "Arqueiro": 0, "Paladino": 0, "Necromante": 0, "Assassino": 0 };
         let skillLevels = {}; 
-        Object.keys(classSkillsData).forEach(c => { skillLevels[c] = [0, 0, 0]; });
+        Object.keys(classSkillsData).forEach(c => { skillLevels[c] = [0, 0, 0, 0, 0]; });
 
         player.potions.push({ type: "HP", quality: "Ruim", size: "Pequena", restore: 25 });
         player.potions.push({ type: "HP", quality: "Ruim", size: "Pequena", restore: 25 });
-        player.potions.push({ type: "HP", quality: "Ruim", size: "Pequena", restore: 25 });
-        player.potions.push({ type: "MP", quality: "Ruim", size: "Média", restore: 50 });
+        player.potions.push({ type: "MP", quality: "Ruim", size: "Pequena", restore: 25 });
 
-        let keys = {};
-        let keyMode = "ambos";
+        let keys = {}; let keyMode = "ambos";
         let canvas, ctx;
-        let mapMonsters = [];
-        let visualEffects = [];
+        let mapMonsters = []; let visualEffects = []; let projectiles = [];
         let dungeonState = { active: false, data: null, floor: 0 };
         let exitPortal = null;
 
@@ -294,6 +312,7 @@
             buildMageShop();
             renderPortals();
             updateHotbar();
+            updateForgeUI();
             
             requestAnimationFrame(gameLoop);
         }
@@ -303,30 +322,28 @@
             canvas.height = canvas.parentElement.clientHeight;
         }
 
-        // SISTEMA RE-ESTRUTURADO: Agora as abas trocam sem nenhuma chance de travar!
         function switchMmoTab(id) {
-            // Esconde todas as views manualmente
             document.getElementById('view-hero').style.display = 'none';
             document.getElementById('view-skills').style.display = 'none';
+            document.getElementById('view-forge').style.display = 'none';
             document.getElementById('view-shop').style.display = 'none';
             document.getElementById('view-world').style.display = 'none';
             document.getElementById('view-adm').style.display = 'none';
             
-            // Remove active dos botões
             document.querySelectorAll('.mmo-tabs button').forEach(b => b.classList.remove('active'));
             
-            // Ativa o alvo selecionado
             document.getElementById(`view-${id}`).style.display = 'block';
             document.getElementById(`tab-${id}`).classList.add('active');
             
             if(id === 'skills') renderSkillsTab();
+            if(id === 'forge') updateForgeUI();
             renderUI();
         }
 
         function buildLobby() {
             dungeonState.active = false; dungeonState.floor = 0;
             player.x = canvas.width / 2; player.y = canvas.height / 2;
-            mapMonsters = []; exitPortal = null; visualEffects = [];
+            mapMonsters = []; exitPortal = null; visualEffects = []; projectiles = [];
             document.getElementById('txt-map-title').innerText = "Vila de Lore (Lobby) 🌆";
             document.getElementById('lbl-current-floor').innerText = "0";
         }
@@ -338,47 +355,80 @@
             generateFloor();
         }
 
+        // MONSTROS MAIS FORTES CONFORME OS ANDARES SÃO SUBIDOS (ESCALONAMENTO EXPOENCIAL)
         function generateFloor() {
             player.x = 40; player.y = canvas.height / 2;
-            mapMonsters = []; visualEffects = [];
-            exitPortal = { x: canvas.width - 40, y: canvas.height / 2, radius: 16 };
+            mapMonsters = []; visualEffects = []; projectiles = [];
+            exitPortal = { x: canvas.width - 40, y: canvas.height / 2, radius: 18 };
 
-            let mult = dungeonState.data.id * 3 + dungeonState.floor;
+            // Multiplicador baseado na dificuldade da masmorra e do andar atual
+            let tierMult = dungeonState.data.id; 
+            let floorProgress = dungeonState.floor; 
+
             let count = dungeonState.floor === 25 ? 1 : 4;
 
             if (dungeonState.floor < 25) {
                 for(let i=0; i<count; i++) {
+                    // Vida cresce linear+exponencial com andares
+                    let baseHp = 25 * tierMult;
+                    let scaleHp = Math.floor(baseHp + (floorProgress * 8) * (1 + floorProgress * 0.05));
+                    let scaleAtk = Math.floor((3 * tierMult) + (floorProgress * 1.5));
+                    let scaleXp = Math.floor((15 * tierMult) + (floorProgress * 5));
+
                     mapMonsters.push({
                         x: 160 + Math.random() * (canvas.width - 240),
                         y: 40 + Math.random() * (canvas.height - 80),
-                        radius: 12, name: "Monstro", emoji: dungeonState.data.mobEmoji,
-                        hp: 30 + (mult * 7), maxHp: 30 + (mult * 7), atk: 4 + (mult * 1.1), exp: 20 + mult,
-                        vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5
+                        radius: 12 + Math.min(6, floorProgress * 0.2), 
+                        name: `Monstro Fv.${floorProgress}`, emoji: dungeonState.data.mobEmoji,
+                        hp: scaleHp, maxHp: scaleHp, atk: scaleAtk, exp: scaleXp,
+                        vx: (Math.random() - 0.5) * (1.5 + floorProgress * 0.05), 
+                        vy: (Math.random() - 0.5) * (1.5 + floorProgress * 0.05)
                     });
                 }
             } else {
+                // BOSS DO ANDAR 25 EXTREMAMENTE PODEROSO
+                let bossHp = (400 * tierMult) * 6;
+                let bossAtk = (25 * tierMult) * 2.5;
                 mapMonsters.push({
                     x: canvas.width - 120, y: canvas.height / 2,
-                    radius: 22, name: dungeonState.data.boss, emoji: "👑",
-                    hp: 500 + (mult * 45), maxHp: 500 + (mult * 45), atk: 30 + mult, exp: 700,
-                    vx: 0.5, vy: 0.5
+                    radius: 26, name: dungeonState.data.boss, emoji: "👑",
+                    hp: bossHp, maxHp: bossHp, atk: bossAtk, exp: 500 * tierMult,
+                    vx: 0.6, vy: 0.6
                 });
             }
             document.getElementById('lbl-current-floor').innerText = dungeonState.floor;
+            pushLog(`⚔️ Entrou no Andar ${dungeonState.floor}. Monstros adaptados!`);
+        }
+
+        function upgradeForge(type) {
+            let cost = type === 'weapon' ? (player.forgeWeapon + 1) * 60 : (player.forgeArmor + 1) * 60;
+            if (player.gold < cost) { pushLog("❌ Ouro insuficiente na Forja!"); return; }
+            
+            player.gold -= cost;
+            if (type === 'weapon') player.forgeWeapon++;
+            else player.forgeArmor++;
+            
+            updateForgeUI();
+            renderUI();
+            pushLog(`🔨 Sucesso! Equipamento de ${type === 'weapon' ? 'Ataque' : 'Defesa'} aprimorado.`);
+        }
+
+        function updateForgeUI() {
+            document.getElementById('forge-weapon-lvl').innerText = player.forgeWeapon;
+            document.getElementById('forge-weapon-bonus').innerText = player.forgeWeapon * 6;
+            document.getElementById('btn-forge-weapon').innerText = `Melhorar (Custo: ${(player.forgeWeapon + 1) * 60}g)`;
+
+            document.getElementById('forge-armor-lvl').innerText = player.forgeArmor;
+            document.getElementById('forge-armor-bonus').innerText = player.forgeArmor * 4;
+            document.getElementById('btn-forge-armor').innerText = `Melhorar (Custo: ${(player.forgeArmor + 1) * 60}g)`;
         }
 
         function gameLoop() {
             let dx = 0; let dy = 0;
-            let useW = keys['w'] || keys['W']; let useS = keys['s'] || keys['S'];
-            let useA = keys['a'] || keys['A']; let useD = keys['d'] || keys['D'];
-            let useUp = keys['arrowup']; let useDown = keys['arrowdown'];
-            let useLeft = keys['arrowleft']; let useRight = keys['arrowright'];
-
-            if (keyMode === "setas") { useW = useS = useA = useD = false; }
-            if (keyMode === "wasd") { useUp = useDown = useLeft = useRight = false; }
-
-            if (useW || useUp) dy -= 1; if (useS || useDown) dy += 1;
-            if (useA || useLeft) dx -= 1; if (useD || useRight) dx += 1;
+            if (keys['w'] || keys['W'] || keys['arrowup']) dy -= 1;
+            if (keys['s'] || keys['S'] || keys['arrowdown']) dy += 1;
+            if (keys['a'] || keys['A'] || keys['arrowleft']) dx -= 1;
+            if (keys['d'] || keys['D'] || keys['arrowright']) dx += 1;
 
             if (dx !== 0 || dy !== 0) {
                 let len = Math.sqrt(dx*dx + dy*dy);
@@ -388,67 +438,112 @@
                 player.y = Math.max(player.radius, Math.min(canvas.height - player.radius, player.y));
             }
 
+            // ATUALIZAR PROJÉTEIS (MAGO E ARQUEIRO SOLTANDO ATAQUES VISUAIS)
+            projectiles.forEach((proj, pIdx) => {
+                let mx = proj.targetMob.x - proj.x;
+                let my = proj.targetMob.y - proj.y;
+                let dist = Math.hypot(mx, my);
+
+                if (dist < 15 || !mapMonsters.includes(proj.targetMob)) {
+                    // Impacto / Explodir projétil
+                    if (mapMonsters.includes(proj.targetMob)) {
+                        proj.targetMob.hp -= proj.damage;
+                        // Efeito visual mudando se o nível do ataque for alto!
+                        if (proj.skillLvl >= 3) {
+                            visualEffects.push({ type: "circle", x: proj.targetMob.x, y: proj.targetMob.y, radius: 25, color: proj.color, life: 15 });
+                            visualEffects.push({ x: proj.targetMob.x, y: proj.targetMob.y - 15, text: `💥 CRIT-EVO ${proj.damage}!`, color: "#ffcc00", life: 30 });
+                        } else {
+                            visualEffects.push({ type: "circle", x: proj.targetMob.x, y: proj.targetMob.y, radius: 8, color: proj.color, life: 10 });
+                            visualEffects.push({ x: proj.targetMob.x, y: proj.targetMob.y - 10, text: `${proj.damage}`, color: "#fff", life: 25 });
+                        }
+
+                        if (proj.targetMob.hp <= 0) {
+                            pushLog(`✨ Abateu ${proj.targetMob.name}. +${proj.targetMob.exp}g.`);
+                            player.gold += proj.targetMob.exp; player.xp += proj.targetMob.exp;
+                            mapMonsters = mapMonsters.filter(m => m !== proj.targetMob);
+                            checkXpGain();
+                        }
+                    }
+                    projectiles.splice(pIdx, 1);
+                } else {
+                    proj.x += (mx / dist) * proj.speed;
+                    proj.y += (my / dist) * proj.speed;
+                }
+            });
+
             mapMonsters.forEach(mob => {
                 let distToPlayer = Math.hypot(player.x - mob.x, player.y - mob.y);
-                if (distToPlayer < 140) { 
+                if (distToPlayer < 150) { 
                     let mx = player.x - mob.x; let my = player.y - mob.y;
                     let mLen = Math.sqrt(mx*mx + my*my);
-                    mob.x += (mx / mLen) * 0.9; mob.y += (my / mLen) * 0.9;
-                } else {
-                    mob.x += mob.vx; mob.y += mob.vy;
-                    if (mob.x < mob.radius || mob.x > canvas.width - mob.radius) mob.vx *= -1;
-                    if (mob.y < mob.radius || mob.y > canvas.height - mob.radius) mob.vy *= -1;
+                    mob.x += (mx / mLen) * 0.95; mob.y += (my / mLen) * 0.95;
                 }
 
                 if (distToPlayer < player.radius + mob.radius) {
                     let now = Date.now();
                     if (!mob.lastAtkTime || now - mob.lastAtkTime > 1000) {
                         mob.lastAtkTime = now;
-                        let netDmg = Math.max(1, Math.floor(mob.atk - (player.def * 0.25)));
+                        let netDmg = Math.max(1, Math.floor(mob.atk - ((player.def + player.forgeArmor * 4) * 0.25)));
                         player.hp -= netDmg;
                         visualEffects.push({ x: player.x, y: player.y - 10, text: `-${netDmg}`, color: "#ff453a", life: 35 });
-                        if(player.hp <= 0) { alert("💀 Você faleceu! Retornando ao Lobby."); buildLobby(); }
+                        if(player.hp <= 0) { alert("💀 Você recuou ao Lobby!"); buildLobby(); }
                         renderUI();
                     }
                 }
             });
 
-            visualEffects.forEach(eff => {
-                eff.life--; if(eff.radius) eff.radius += 1.5; if(eff.y && !eff.radius) eff.y -= 0.5;
-            });
+            visualEffects.forEach(eff => { eff.life--; if(eff.radius) eff.radius += 1.8; if(eff.y && !eff.radius) eff.y -= 0.6; });
             visualEffects = visualEffects.filter(eff => eff.life > 0);
 
-            if (dungeonState.active && exitPortal) {
+            if (dungeonState.active && exitPortal && mapMonsters.length === 0) {
                 if (Math.hypot(player.x - exitPortal.x, player.y - exitPortal.y) < player.radius + exitPortal.radius) {
-                    if (dungeonState.floor === 25) { pushLog("🏆 Você limpou toda a Masmorra!"); buildLobby(); }
-                    else { dungeonState.floor++; generateFloor(); pushLog(`🚪 Subiu para o andar ${dungeonState.floor}!`); }
+                    if (dungeonState.floor === 25) { pushLog("🏆 MASMORRA CONCLUÍDA!"); buildLobby(); }
+                    else { dungeonState.floor++; generateFloor(); }
                     renderUI();
                 }
             }
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (dungeonState.active && exitPortal) {
-                ctx.fillStyle = "rgba(52, 199, 89, 0.25)";
+            
+            // Desenhar Portal de Saída
+            if (dungeonState.active && mapMonsters.length === 0) {
+                ctx.fillStyle = "rgba(163, 58, 237, 0.4)";
                 ctx.beginPath(); ctx.arc(exitPortal.x, exitPortal.y, exitPortal.radius, 0, Math.PI*2); ctx.fill();
-                ctx.font = "14px Arial"; ctx.fillText("🚪", exitPortal.x - 7, exitPortal.y + 5);
+                ctx.font = "14px Arial"; ctx.fillText("🌌", exitPortal.x - 7, exitPortal.y + 5);
             }
 
+            // Desenhar Monstros
             mapMonsters.forEach(mob => {
-                ctx.font = `${mob.radius * 1.3}px Arial`;
+                ctx.font = `${mob.radius * 1.4}px Arial`;
                 ctx.fillText(mob.emoji, mob.x - mob.radius, mob.y + mob.radius/1.5);
-                ctx.fillStyle = "#555"; ctx.fillRect(mob.x - 12, mob.y - mob.radius - 6, 24, 3);
-                ctx.fillStyle = "#ff453a"; ctx.fillRect(mob.x - 12, mob.y - mob.radius - 6, (mob.hp / mob.maxHp) * 24, 3);
+                ctx.fillStyle = "#555"; ctx.fillRect(mob.x - 14, mob.y - mob.radius - 8, 28, 4);
+                ctx.fillStyle = "#ff453a"; ctx.fillRect(mob.x - 14, mob.y - mob.radius - 8, (mob.hp / mob.maxHp) * 28, 4);
             });
 
+            // Desenhar Projéteis de Magias / Flechas
+            projectiles.forEach(proj => {
+                ctx.fillStyle = proj.color;
+                ctx.beginPath();
+                ctx.arc(proj.x, proj.y, proj.size, 0, Math.PI * 2);
+                ctx.fill();
+                // Detalhe brilhante interno se lv alto
+                if (proj.skillLvl >= 3) {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath(); ctx.arc(proj.x, proj.y, proj.size / 2, 0, Math.PI * 2); ctx.fill();
+                }
+            });
+
+            // Desenhar Jogador
             ctx.font = "24px Arial";
             ctx.fillText(classEmojis[player.currentClass] || "👤", player.x - 12, player.y + 10);
 
+            // Desenhar Efeitos Visuais
             visualEffects.forEach(eff => {
                 if (eff.text) {
-                    ctx.fillStyle = eff.color; ctx.font = "bold 11px Courier New";
-                    ctx.fillText(eff.text, eff.x - 10, eff.y);
+                    ctx.fillStyle = eff.color; ctx.font = "bold 12px Courier New";
+                    ctx.fillText(eff.text, eff.x - 12, eff.y);
                 } else if (eff.type === "circle") {
-                    ctx.strokeStyle = eff.color; ctx.lineWidth = 3;
+                    ctx.strokeStyle = eff.color; ctx.lineWidth = eff.radius > 15 ? 4 : 2;
                     ctx.beginPath(); ctx.arc(eff.x, eff.y, eff.radius, 0, Math.PI*2); ctx.stroke();
                 }
             });
@@ -464,18 +559,30 @@
             let target = mapMonsters.find(mob => Math.hypot(mob.x - mouseX, mob.y - mouseY) < mob.radius + 15);
             if (target) {
                 let distToTarget = Math.hypot(player.x - target.x, player.y - target.y);
-                if (distToTarget > 65) { pushLog("❌ Muito longe para desferir ataque físico!"); return; }
+                
+                // Mago e Arqueiro atacam de longe no clique comum!
+                if (player.currentClass === "Mago" || player.currentClass === "Arqueiro") {
+                    let finalDmg = 8 + Math.floor(player.str * 0.4) + (player.forgeWeapon * 6);
+                    projectiles.push({
+                        x: player.x, y: player.y, speed: 7, size: player.currentClass === "Mago" ? 5 : 3,
+                        color: player.currentClass === "Mago" ? "#00a2ff" : "#dca842",
+                        targetMob: target, damage: finalDmg, skillLvl: 1
+                    });
+                    return;
+                }
 
-                let dmg = 8 + Math.floor(player.str * 0.8);
+                // Corpo a corpo (Guerreiro, Assassino...)
+                if (distToTarget > 70) { pushLog("❌ Alvo fora do alcance corpo a corpo!"); return; }
+
+                let dmg = 8 + Math.floor(player.str * 0.9) + (player.forgeWeapon * 6);
                 let isCrit = Math.random() < (player.luk * 0.03);
-                if (isCrit) { dmg *= 2; }
+                if (isCrit) dmg *= 2;
 
                 target.hp -= dmg;
                 visualEffects.push({ x: target.x, y: target.y - 12, text: isCrit ? `⚡${dmg}!` : `${dmg}`, color: isCrit ? "#ffcc00" : "#fff", life: 30 });
-                visualEffects.push({ type: "circle", x: target.x, y: target.y, radius: 5, color: "#ff453a", life: 10 });
+                visualEffects.push({ type: "circle", x: target.x, y: target.y, radius: 6, color: "#ff453a", life: 10 });
 
                 if (target.hp <= 0) {
-                    pushLog(`✨ Abateu ${target.name}. Ganhou +${target.exp} XP/Ouro.`);
                     player.gold += target.exp; player.xp += target.exp;
                     mapMonsters = mapMonsters.filter(m => m !== target);
                     checkXpGain();
@@ -484,40 +591,77 @@
             }
         }
 
+        // SISTEMA EVOLUTIVO DE ATAQUES CONFORME UPADO (SKILLS DA HOTBAR)
         function triggerSkillSlot(slotIndex) {
             let currentSkills = classSkillsData[player.currentClass];
             let skill = currentSkills[slotIndex];
             let lvl = skillLevels[player.currentClass][slotIndex];
 
-            if (lvl === 0) { pushLog("❌ Habilidade bloqueada. Adicione pontos na aba 'Skills'!"); return; }
-            if (player.mp < skill.cost) { pushLog("❌ Energia Mágica (MP) Insuficiente!"); return; }
+            if (lvl === 0) { pushLog("❌ Adicione pontos nesta habilidade na aba 'Skills' primeiro!"); return; }
+            if (player.mp < skill.cost) { pushLog("❌ Mana insuficiente!"); return; }
 
             player.mp -= skill.cost;
-            let radiusPower = 35 + (player.mag * 1.5);
-            let finalDmg = Math.floor((10 + player.mag * 1.2) * skill.dmgMult * (1 + lvl * 0.2));
+            let dmgPower = Math.floor((12 + player.mag * 1.3) * skill.dmgMult * (1 + lvl * 0.25)) + (player.forgeWeapon * 6);
 
+            // Se for Habilidade do tipo Projétil (Mago / Arqueiro)
+            if (skill.type === "projectile") {
+                if (mapMonsters.length === 0) { pushLog("❌ Nenhum inimigo por perto."); return; }
+                let target = mapMonsters[0];
+
+                // Identifica o visual evoluído com base no Nível da Habilidade (Ex: Lv.3+ vira Bola de Fogo)
+                let projColor = "#007aff"; 
+                let projSize = 6 + (lvl * 2);
+                if (skill.projType === "magic" && lvl >= 3) { projColor = "#ff453a"; } // Esfera Mágica vira Bola de Fogo Real!
+                if (skill.projType === "ice") { projColor = "#5ac8fa"; }
+                if (skill.projType === "arrow" && lvl >= 3) { projColor = "#ff9500"; projSize = 8; } // Flechas Flamejantes
+
+                projectiles.push({
+                    x: player.x, y: player.y, speed: 6 + lvl, size: projSize,
+                    color: projColor, targetMob: target, damage: dmgPower, skillLvl: lvl
+                });
+                renderUI();
+                return;
+            }
+
+            // Se for Buff de Atributo
+            if (skill.isBuff) {
+                player[skill.stat] += (skill.amount + lvl * 3);
+                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 20, color: "#ffcc00", life: 25 });
+                pushLog(`⚡ Ativou ${skill.name} (Nv.${lvl}). Atributo Amplificado!`);
+                renderUI();
+                return;
+            }
+
+            // Se for Cura
             if (skill.isHeal) {
-                let cure = skill.amount + (player.mag * 2);
-                player.hp = Math.min(player.maxHp, player.hp + cure);
-                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 10, color: "#34c759", life: 15 });
-                visualEffects.push({ x: player.x, y: player.y - 15, text: `+${cure} HP`, color: "#34c759", life: 30 });
-            } else if (skill.type === "aoe") {
-                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 15, color: "#007aff", life: 20 });
+                let healing = skill.amount + (player.mag * 2) + (lvl * 15);
+                player.hp = Math.min(player.maxHp, player.hp + healing);
+                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 15, color: "#34c759", life: 15 });
+                renderUI();
+                return;
+            }
+
+            // Ataques em Área (AoE) - Quanto maior o nível, maior o efeito visual na tela!
+            if (skill.type === "aoe") {
+                let aoeRadius = 50 + (lvl * 15); 
+                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: aoeRadius / 2, color: "#ff9500", life: 20 });
+                
                 mapMonsters.forEach(mob => {
-                    if (Math.hypot(player.x - mob.x, player.y - mob.y) < radiusPower) {
-                        mob.hp -= finalDmg;
-                        visualEffects.push({ x: mob.x, y: mob.y - 10, text: `💥${finalDmg}`, color: "#ffcc00", life: 25 });
+                    if (Math.hypot(player.x - mob.x, player.y - mob.y) < aoeRadius) {
+                        mob.hp -= dmgPower;
+                        visualEffects.push({ x: mob.x, y: mob.y - 12, text: `💥 Area [Lv.${lvl}] ${dmgPower}`, color: "#ffcc00", life: 25 });
                     }
                 });
-            } else {
-                if (mapMonsters.length === 0) { pushLog("❌ Nenhum monstro em vista."); return; }
-                let closest = mapMonsters[0];
-                mapMonsters.forEach(m => {
-                    if(Math.hypot(player.x - m.x, player.y - m.y) < Math.hypot(player.x - closest.x, player.y - closest.y)) closest = m;
-                });
-                visualEffects.push({ type: "circle", x: closest.x, y: closest.y, radius: 8, color: "#ff9500", life: 15 });
-                closest.hp -= finalDmg;
-                visualEffects.push({ x: closest.x, y: closest.y - 10, text: `💥${finalDmg}`, color: "#ff9500", life: 25 });
+            }
+
+            // Ataques corpo a corpo diretos
+            if (skill.type === "melee") {
+                if (mapMonsters.length === 0) return;
+                let target = mapMonsters[0];
+                target.hp -= dmgPower;
+                // Efeito visual parrudo para Guerreiro de Alto Nível
+                visualEffects.push({ type: "circle", x: target.x, y: target.y, radius: lvl >= 3 ? 22 : 10, color: "#ff453a", life: 12 });
+                visualEffects.push({ x: target.x, y: target.y - 10, text: `⚔️ Corte Brutal: ${dmgPower}`, color: "#ff3b30", life: 25 });
             }
 
             mapMonsters.forEach(mob => {
@@ -532,9 +676,9 @@
                 player.xp -= player.nextXp; player.lvl++;
                 player.points += 5; 
                 classSkillPoints[player.currentClass] += 1;
-                player.maxHp += 10; player.hp = player.maxHp;
-                player.nextXp = Math.floor(player.nextXp * 1.5);
-                pushLog(`⭐ LEVEL UP! Nível ${player.lvl}! +1 Ponto de Skill.`);
+                player.maxHp += 12; player.hp = player.maxHp;
+                player.nextXp = Math.floor(player.nextXp * 1.55);
+                pushLog(`⭐ LEVEL UP! Você alcançou o Nível ${player.lvl}!`);
                 document.getElementById('adm-set-lvl').value = player.lvl;
                 renderSkillsTab();
             }
@@ -542,7 +686,7 @@
 
         function changeClass(c) {
             player.currentClass = c;
-            pushLog(`🎭 Mudou para: ${c}`);
+            pushLog(`🎭 Transmutado para a classe: ${c}`);
             updateHotbar();
             renderSkillsTab();
             renderUI();
@@ -595,7 +739,7 @@
                 box.innerHTML += `<div class="talent-node">
                     <div>
                         <b>${sk.icon} ${sk.name}</b> (Nv. ${currentLvl})<br>
-                        <span style="font-size:10px; color:#c4bca3;">MP: ${sk.cost} | Nvl Mínimo: ${sk.reqLvl}</span>
+                        <span style="font-size:10px; color:#c4bca3;">Custo: ${sk.cost} MP | Requer Nv. ${sk.reqLvl}</span>
                     </div>
                     <button class="action-btn" onclick="learnSkillNode(${i})" ${canUpgrade ? '' : 'disabled'}>Treinar</button>
                 </div>`;
@@ -604,13 +748,13 @@
 
         function buildMageShop() {
             const container = document.getElementById('mage-shop-products'); container.innerHTML = "";
-            const qualities = ["Ruim", "Média", "Boa", "Perfeita"];
-            const sizes = ["Pequena", "Média", "Grande"];
+            const qualities = ["Normal", "Rara", "Épica"];
+            const sizes = ["Pequena", "Grande"];
 
             qualities.forEach((q, qIdx) => {
                 sizes.forEach((s, sIdx) => {
-                    let restore = (sIdx + 1) * 25 * (qIdx + 1);
-                    let price = (sIdx + 1) * 12 + (qIdx * 20);
+                    let restore = (sIdx + 1) * 35 * (qIdx + 1);
+                    let price = (sIdx + 1) * 15 + (qIdx * 30);
                     container.innerHTML += `<div class="flex-row" style="margin-bottom:2px;">
                         <span>🧪 <b>${q} (${s})</b><br><span style="color:#34c759">+${restore} Recov</span> | <span style="color:#ffcc00">$${price}g</span></span>
                         <div style="display:flex; gap:2px;">
@@ -627,7 +771,6 @@
             if (player.potions.length >= 15) { pushLog("❌ Bolsa cheia!"); return; }
             player.gold -= price;
             player.potions.push({ type: type, quality: q, size: s, restore: rest });
-            document.getElementById('adm-set-gold').value = player.gold;
             renderUI();
         }
 
@@ -637,7 +780,7 @@
             let pot = player.potions.splice(idx, 1)[0];
             if (type === "HP") player.hp = Math.min(player.maxHp, player.hp + pot.restore);
             if (type === "MP") player.mp = Math.min(player.maxMp, player.mp + pot.restore);
-            pushLog(`🧪 Usou Poção de ${type}. Recobrou +${pot.restore}.`);
+            pushLog(`🧪 Restaurou +${pot.restore} de ${type}.`);
             renderUI();
         }
 
@@ -645,25 +788,23 @@
             if (type === 'gold') { player.gold = parseInt(document.getElementById('adm-set-gold').value) || 0; }
             if (type === 'lvl') { 
                 player.lvl = parseInt(document.getElementById('adm-set-lvl').value) || 1; 
-                player.maxHp = 100 + (player.lvl * 10); player.hp = player.maxHp;
+                player.maxHp = 100 + (player.lvl * 12); player.hp = player.maxHp;
             }
-            if (type === 'keys') { keyMode = document.getElementById('adm-set-keys').value; }
             renderUI();
         }
 
         function spawnDebugMob() {
             mapMonsters.push({
                 x: canvas.width / 2, y: canvas.height / 2, radius: 14,
-                name: "Alvo BugTest", emoji: "🐛", hp: 120, maxHp: 120, atk: 5, exp: 50, vx: 0.3, vy: -0.3
+                name: "Alvo Treino", emoji: "🐛", hp: 150, maxHp: 150, atk: 5, exp: 60, vx: 0.4, vy: -0.4
             });
-            pushLog("⚙️ ADM invocou Monstro de Teste no centro.");
         }
 
         function renderPortals() {
             const container = document.getElementById('portal-triggers'); container.innerHTML = "";
             instances.forEach(i => {
-                container.innerHTML += `<button onclick="startInstance(${i.id})" style="background:#32231d; border:2px solid #0f0a08; color:#fff; text-align:left; padding:5px; font-size:11px; cursor:pointer;">
-                    🌌 Masmorra: <b>${i.name}</b> (Nv. ${i.lvl})
+                container.innerHTML += `<button onclick="startInstance(${i.id})" style="background:#32231d; border:2px solid #0f0a08; color:#fff; text-align:left; padding:6px; font-size:11px; cursor:pointer; margin-bottom:2px;">
+                    🌌 Masmorra: <b>${i.name}</b> (Requer Nv. ${i.lvl})
                 </button>`;
             });
         }
@@ -680,6 +821,9 @@
             document.getElementById('lbl-luk').innerText = player.luk;
             document.getElementById('lbl-def').innerText = player.def;
             document.getElementById('lbl-pot-count').innerText = player.potions.length;
+            
+            document.getElementById('lbl-forge-atk').innerText = `+${player.forgeWeapon * 6}`;
+            document.getElementById('lbl-forge-def').innerText = `+${player.forgeArmor * 4}`;
 
             document.getElementById('fill-hp').style.width = `${(player.hp/player.maxHp)*100}%`;
             document.getElementById('txt-hp').innerText = `HP: ${player.hp}/${player.maxHp}`;
