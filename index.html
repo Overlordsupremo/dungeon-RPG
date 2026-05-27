@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Action RPG: Realtime Legends</title>
+    <title>Action RPG: Realtime Legends Fixed</title>
     <style>
         * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; image-rendering: pixelated; }
         body { background-color: #161110; color: #f4edd4; margin: 0; padding: 12px; user-select: none; }
@@ -18,12 +18,10 @@
         .mmo-tabs button { padding: 8px 2px; font-size: 11px; background: #32231d; border: 2px solid #0f0a08; color: #f4edd4; cursor: pointer; font-weight: bold; }
         .mmo-tabs button.active { background: #bd3a28; border-color: #ff453a; color: #fff; }
 
-        /* Canvas de Jogo */
         .game-screen { background: #1c120c; border: 4px solid #0f0a08; outline: 4px solid #4a3831; padding: 8px; position: relative; }
         #canvas-container { position: relative; width: 100%; background: #080504; border: 4px solid #0f0a08; overflow: hidden; height: 360px; cursor: crosshair; }
         canvas { display: block; width: 100%; height: 100%; }
         
-        /* Barras com Indicadores Numéricos */
         .bar { background: #0f0a08; width: 100%; height: 22px; border: 2px solid #3a2a24; margin: 4px 0; overflow: hidden; position: relative; }
         .bar-fill { height: 100%; width: 100%; transition: width 0.05s linear; }
         .hp-fill { background: #bd3a28; }
@@ -34,7 +32,6 @@
         .flex-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 6px; background: #32231d; border: 2px solid #0f0a08; font-size: 11px; }
         .log-terminal { background: #080504; border: 2px solid #0f0a08; height: 95px; overflow-y: auto; padding: 6px; font-size: 11px; color: #bcae97; }
         
-        /* Hotbar de Habilidades */
         .hotbar-container { display: flex; justify-content: center; gap: 8px; background: #0f0a08; padding: 8px; border: 3px solid #3a2a24; margin-top: 8px; }
         .hotbar-slot { width: 50px; height: 50px; background: #2d1f19; border: 2px solid #5a4338; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
         .hotbar-slot:hover { border-color: #ff453a; background: #3a2a24; }
@@ -48,7 +45,6 @@
         .talent-node { background: #2d1f19; border: 2px solid #0f0a08; padding: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
         .adm-input { background: #080504; border: 2px solid #3a2a24; color: #34c759; padding: 4px; width: 100%; font-weight: bold; font-size: 11px; }
 
-        /* Estilização da Tabela de Status */
         .status-table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 10px; background: #080504; }
         .status-table th, .status-table td { border: 1px solid #3a2a24; padding: 5px; text-align: left; }
         .status-table th { background: #32231d; color: #ffcc00; }
@@ -211,11 +207,9 @@
 
             <div class="log-terminal" id="terminal-logs" style="margin-top:6px;"></div>
         </div>
-
     </div>
 
     <script>
-        // BANCO DE MASMORRAS
         const instances = [
             { id: 1, name: "Esgotos de Cobre", lvl: 1, boss: "🐀 Rei Rato", mobEmoji: "🐀" },
             { id: 2, name: "Caverna Sombria", lvl: 5, boss: "🤖 Golem Titã", mobEmoji: "🕷️" },
@@ -223,10 +217,8 @@
             { id: 4, name: "Vulcão do Dragão", lvl: 18, boss: "🐉 Dragão Ignis", mobEmoji: "🔥" }
         ];
 
-        // EMOJIS DAS CLASSES
         const classEmojis = { "Guerreiro": "⚔️", "Mago": "🧙", "Arqueiro": "🏹", "Paladino": "🛡️", "Necromante": "🧟", "Assassino": "🥷" };
 
-        // CONFIGURAÇÕES DE HABILIDADES POR CLASSE
         const classSkillsData = {
             "Guerreiro": [
                 { name: "Corte Veloz", icon: "🪓", cost: 15, dmgMult: 1.8, type: "melee", reqLvl: 1 },
@@ -260,7 +252,6 @@
             ]
         };
 
-        // ENGINES DO JOGADOR (STATUS INICIAIS SOLICITADOS)
         let player = {
             x: 150, y: 150, radius: 12, baseSpeed: 2.5,
             lvl: 1, xp: 0, nextXp: 100, gold: 100,
@@ -269,15 +260,10 @@
             points: 0, currentClass: "Guerreiro", potions: []
         };
 
-        // CONTROLE DOS PONTOS DE SKILLS E NÍVEL DE CADA SKILL INDIVIDUAL
         let classSkillPoints = { "Guerreiro": 0, "Mago": 0, "Arqueiro": 0, "Paladino": 0, "Necromante": 0, "Assassino": 0 };
         let skillLevels = {}; 
-        // Inicializa todas as skills em nível 0
-        Object.keys(classSkillsData).forEach(c => {
-            skillLevels[c] = [0, 0, 0];
-        });
+        Object.keys(classSkillsData).forEach(c => { skillLevels[c] = [0, 0, 0]; });
 
-        // POÇÕES INICIAIS EXATAS: 3 ruins pequenas, 1 ruim média
         player.potions.push({ type: "HP", quality: "Ruim", size: "Pequena", restore: 25 });
         player.potions.push({ type: "HP", quality: "Ruim", size: "Pequena", restore: 25 });
         player.potions.push({ type: "HP", quality: "Ruim", size: "Pequena", restore: 25 });
@@ -301,7 +287,6 @@
             canvas.addEventListener('mousedown', handleCanvasClick);
             window.addEventListener('resize', resizeCanvas);
 
-            // Preencher inputs ADM iniciais para debug fácil
             document.getElementById('adm-set-gold').value = player.gold;
             document.getElementById('adm-set-lvl').value = player.lvl;
 
@@ -316,6 +301,18 @@
         function resizeCanvas() {
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
+        }
+
+        // ALTERNÂNCIA DE ABAS CORRIGIDA (Garante que o display mude de 'none' para 'block')
+        function switchMmoTab(id) {
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.mmo-tabs button').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(`view-${id}`).style.display = 'block';
+            document.getElementById(`tab-${id}`).classList.add('active');
+            
+            if(id === 'skills') renderSkillsTab();
+            renderUI();
         }
 
         function buildLobby() {
@@ -352,7 +349,6 @@
                     });
                 }
             } else {
-                // CHEFE DO ANDAR 25
                 mapMonsters.push({
                     x: canvas.width - 120, y: canvas.height / 2,
                     radius: 22, name: dungeonState.data.boss, emoji: "👑",
@@ -363,9 +359,7 @@
             document.getElementById('lbl-current-floor').innerText = dungeonState.floor;
         }
 
-        // GAME LOOP - MOVIMENTAÇÃO E INTELIGÊNCIA ARTIFICIAL DOS MOBS
         function gameLoop() {
-            // 1. Movimentação do Jogador
             let dx = 0; let dy = 0;
             let useW = keys['w'] || keys['W']; let useS = keys['s'] || keys['S'];
             let useA = keys['a'] || keys['A']; let useD = keys['d'] || keys['D'];
@@ -386,23 +380,18 @@
                 player.y = Math.max(player.radius, Math.min(canvas.height - player.radius, player.y));
             }
 
-            // 2. Inteligência Artificial (IA) dos Monstros - Eles andam sozinhos e perseguem!
             mapMonsters.forEach(mob => {
                 let distToPlayer = Math.hypot(player.x - mob.x, player.y - mob.y);
-                
                 if (distToPlayer < 140) { 
-                    // Perseguição ativa se o jogador entrar no raio de visão
                     let mx = player.x - mob.x; let my = player.y - mob.y;
                     let mLen = Math.sqrt(mx*mx + my*my);
                     mob.x += (mx / mLen) * 0.9; mob.y += (my / mLen) * 0.9;
                 } else {
-                    // Movimentação boba e aleatória pela sala
                     mob.x += mob.vx; mob.y += mob.vy;
                     if (mob.x < mob.radius || mob.x > canvas.width - mob.radius) mob.vx *= -1;
                     if (mob.y < mob.radius || mob.y > canvas.height - mob.radius) mob.vy *= -1;
                 }
 
-                // Dano contínuo por colisão física corpo a corpo com monstro
                 if (distToPlayer < player.radius + mob.radius) {
                     let now = Date.now();
                     if (!mob.lastAtkTime || now - mob.lastAtkTime > 1000) {
@@ -410,19 +399,17 @@
                         let netDmg = Math.max(1, Math.floor(mob.atk - (player.def * 0.25)));
                         player.hp -= netDmg;
                         visualEffects.push({ x: player.x, y: player.y - 10, text: `-${netDmg}`, color: "#ff453a", life: 35 });
-                        if(player.hp <= 0) { alert("💀 Você faliu! Retornando ao Lobby."); buildLobby(); }
+                        if(player.hp <= 0) { alert("💀 Você faleceu! Retornando ao Lobby."); buildLobby(); }
                         renderUI();
                     }
                 }
             });
 
-            // 3. Progresso de efeitos visuais das habilidades
             visualEffects.forEach(eff => {
                 eff.life--; if(eff.radius) eff.radius += 1.5; if(eff.y && !eff.radius) eff.y -= 0.5;
             });
             visualEffects = visualEffects.filter(eff => eff.life > 0);
 
-            // Verificar portal de avanço
             if (dungeonState.active && exitPortal) {
                 if (Math.hypot(player.x - exitPortal.x, player.y - exitPortal.y) < player.radius + exitPortal.radius) {
                     if (dungeonState.floor === 25) { pushLog("🏆 Você limpou toda a Masmorra!"); buildLobby(); }
@@ -431,9 +418,7 @@
                 }
             }
 
-            // 4. Desenhar Elementos na Tela
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             if (dungeonState.active && exitPortal) {
                 ctx.fillStyle = "rgba(52, 199, 89, 0.25)";
                 ctx.beginPath(); ctx.arc(exitPortal.x, exitPortal.y, exitPortal.radius, 0, Math.PI*2); ctx.fill();
@@ -443,16 +428,13 @@
             mapMonsters.forEach(mob => {
                 ctx.font = `${mob.radius * 1.3}px Arial`;
                 ctx.fillText(mob.emoji, mob.x - mob.radius, mob.y + mob.radius/1.5);
-                // Mini barra de vida em cima do mob
                 ctx.fillStyle = "#555"; ctx.fillRect(mob.x - 12, mob.y - mob.radius - 6, 24, 3);
                 ctx.fillStyle = "#ff453a"; ctx.fillRect(mob.x - 12, mob.y - mob.radius - 6, (mob.hp / mob.maxHp) * 24, 3);
             });
 
-            // Desenhar herói
             ctx.font = "24px Arial";
             ctx.fillText(classEmojis[player.currentClass] || "👤", player.x - 12, player.y + 10);
 
-            // Renderizar Efeitos Visuais das Skills e Textos flutuantes
             visualEffects.forEach(eff => {
                 if (eff.text) {
                     ctx.fillStyle = eff.color; ctx.font = "bold 11px Courier New";
@@ -466,13 +448,11 @@
             requestAnimationFrame(gameLoop);
         }
 
-        // ATAQUE BÁSICO VIA CLIQUE DO MOUSE
         function handleCanvasClick(e) {
             if (!dungeonState.active) return;
             let rect = canvas.getBoundingClientRect();
             let mouseX = e.clientX - rect.left; let mouseY = e.clientY - rect.top;
 
-            // Encontra monstro clicado
             let target = mapMonsters.find(mob => Math.hypot(mob.x - mouseX, mob.y - mouseY) < mob.radius + 15);
             if (target) {
                 let distToTarget = Math.hypot(player.x - target.x, player.y - target.y);
@@ -484,8 +464,6 @@
 
                 target.hp -= dmg;
                 visualEffects.push({ x: target.x, y: target.y - 12, text: isCrit ? `⚡${dmg}!` : `${dmg}`, color: isCrit ? "#ffcc00" : "#fff", life: 30 });
-                
-                // Animação de corte
                 visualEffects.push({ type: "circle", x: target.x, y: target.y, radius: 5, color: "#ff453a", life: 10 });
 
                 if (target.hp <= 0) {
@@ -498,7 +476,6 @@
             }
         }
 
-        // DISPARADOR DA HOTBAR POR NÚMEROS (1, 2, 3) OU CLIQUE
         function triggerSkillSlot(slotIndex) {
             let currentSkills = classSkillsData[player.currentClass];
             let skill = currentSkills[slotIndex];
@@ -508,8 +485,6 @@
             if (player.mp < skill.cost) { pushLog("❌ Energia Mágica (MP) Insuficiente!"); return; }
 
             player.mp -= skill.cost;
-
-            // Efeito visual com base no atributo de Magia (MAG)
             let radiusPower = 35 + (player.mag * 1.5);
             let finalDmg = Math.floor((10 + player.mag * 1.2) * skill.dmgMult * (1 + lvl * 0.2));
 
@@ -518,9 +493,7 @@
                 player.hp = Math.min(player.maxHp, player.hp + cure);
                 visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 10, color: "#34c759", life: 15 });
                 visualEffects.push({ x: player.x, y: player.y - 15, text: `+${cure} HP`, color: "#34c759", life: 30 });
-                pushLog(`🔮 Conjurou ${skill.name}. Restaurou vida!`);
             } else if (skill.type === "aoe") {
-                // Ataca tudo ao redor do herói
                 visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 15, color: "#007aff", life: 20 });
                 mapMonsters.forEach(mob => {
                     if (Math.hypot(player.x - mob.x, player.y - mob.y) < radiusPower) {
@@ -528,51 +501,40 @@
                         visualEffects.push({ x: mob.x, y: mob.y - 10, text: `💥${finalDmg}`, color: "#ffcc00", life: 25 });
                     }
                 });
-                pushLog(`🔮 Executou habilidade de área: ${skill.name}!`);
             } else {
-                // Ataque direcionado ao monstro mais próximo
                 if (mapMonsters.length === 0) { pushLog("❌ Nenhum monstro em vista."); return; }
                 let closest = mapMonsters[0];
                 mapMonsters.forEach(m => {
                     if(Math.hypot(player.x - m.x, player.y - m.y) < Math.hypot(player.x - closest.x, player.y - closest.y)) closest = m;
                 });
-
                 visualEffects.push({ type: "circle", x: closest.x, y: closest.y, radius: 8, color: "#ff9500", life: 15 });
                 closest.hp -= finalDmg;
                 visualEffects.push({ x: closest.x, y: closest.y - 10, text: `💥${finalDmg}`, color: "#ff9500", life: 25 });
-                pushLog(`🔮 Lançou ${skill.name} no alvo mais próximo.`);
             }
 
-            // Limpar mortos após skill
             mapMonsters.forEach(mob => {
-                if (mob.hp <= 0) {
-                    player.gold += mob.exp; player.xp += mob.exp;
-                    checkXpGain();
-                }
+                if (mob.hp <= 0) { player.gold += mob.exp; player.xp += mob.exp; checkXpGain(); }
             });
             mapMonsters = mapMonsters.filter(m => m.hp > 0);
             renderUI();
         }
 
-        // UP DE NÍVEL E SEUS EXPONENTES
         function checkXpGain() {
             if (player.xp >= player.nextXp) {
                 player.xp -= player.nextXp; player.lvl++;
                 player.points += 5; 
-                // Cada nível dá +1 ponto de habilidade para a classe ativa usar na árvore
                 classSkillPoints[player.currentClass] += 1;
                 player.maxHp += 10; player.hp = player.maxHp;
                 player.nextXp = Math.floor(player.nextXp * 1.5);
-                pushLog(`⭐ LEVEL UP! Você alcançou o Nível ${player.lvl}! +1 Ponto de Skill obtido.`);
+                pushLog(`⭐ LEVEL UP! Nível ${player.lvl}! +1 Ponto de Skill.`);
                 document.getElementById('adm-set-lvl').value = player.lvl;
                 renderSkillsTab();
             }
         }
 
-        // COMPRA DE ATRIBUTOS E ALTERAÇÃO DE CLASSES
         function changeClass(c) {
             player.currentClass = c;
-            pushLog(`🎭 Transmutou-se para a classe: ${c}`);
+            pushLog(`🎭 Mudou para: ${c}`);
             updateHotbar();
             renderSkillsTab();
             renderUI();
@@ -587,13 +549,11 @@
             }
         }
 
-        // UP DE HABILIDADES NA ÁRVORE (ABA SKILLS)
         function learnSkillNode(slotIndex) {
             let activeClass = player.currentClass;
             if (classSkillPoints[activeClass] > 0) {
                 classSkillPoints[activeClass]--;
                 skillLevels[activeClass][slotIndex]++;
-                pushLog(`📜 Evoluiu habilidade slot [${slotIndex+1}] para Nível ${skillLevels[activeClass][slotIndex]}.`);
                 renderSkillsTab();
                 updateHotbar();
             }
@@ -605,7 +565,6 @@
                 let lvl = skillLevels[player.currentClass][i];
                 let iconEl = document.getElementById(`hb-icon-${i}`);
                 let lvlEl = document.getElementById(`hb-lvl-${i}`);
-                
                 if (lvl > 0) {
                     iconEl.innerText = currentSkills[i].icon;
                     lvlEl.innerText = `Nv.${lvl}`;
@@ -625,18 +584,16 @@
             classSkillsData[activeClass].forEach((sk, i) => {
                 let currentLvl = skillLevels[activeClass][i];
                 let canUpgrade = classSkillPoints[activeClass] > 0 && player.lvl >= sk.reqLvl;
-                
                 box.innerHTML += `<div class="talent-node">
                     <div>
                         <b>${sk.icon} ${sk.name}</b> (Nv. ${currentLvl})<br>
-                        <span style="font-size:10px; color:#c4bca3;">Gasto: ${sk.cost} MP | Requer Nível: ${sk.reqLvl}</span>
+                        <span style="font-size:10px; color:#c4bca3;">MP: ${sk.cost} | Nvl Mínimo: ${sk.reqLvl}</span>
                     </div>
                     <button class="action-btn" onclick="learnSkillNode(${i})" ${canUpgrade ? '' : 'disabled'}>Treinar</button>
                 </div>`;
             });
         }
 
-        // LOJA DO MAGO EXPANDIDA (4 QUALIDADES X 3 TAMANHOS)
         function buildMageShop() {
             const container = document.getElementById('mage-shop-products'); container.innerHTML = "";
             const qualities = ["Ruim", "Média", "Boa", "Perfeita"];
@@ -646,7 +603,6 @@
                 sizes.forEach((s, sIdx) => {
                     let restore = (sIdx + 1) * 25 * (qIdx + 1);
                     let price = (sIdx + 1) * 12 + (qIdx * 20);
-                    
                     container.innerHTML += `<div class="flex-row" style="margin-bottom:2px;">
                         <span>🧪 <b>${q} (${s})</b><br><span style="color:#34c759">+${restore} Recov</span> | <span style="color:#ffcc00">$${price}g</span></span>
                         <div style="display:flex; gap:2px;">
@@ -659,28 +615,24 @@
         }
 
         function buyPotionMage(type, q, s, rest, price) {
-            if (player.gold < price) { pushLog("❌ Dinheiro insuficiente!"); return; }
-            if (player.potions.length >= 15) { pushLog("❌ Inventário de elixires cheio (Máx: 15)!"); return; }
+            if (player.gold < price) { pushLog("❌ Ouro insuficiente!"); return; }
+            if (player.potions.length >= 15) { pushLog("❌ Bolsa cheia!"); return; }
             player.gold -= price;
             player.potions.push({ type: type, quality: q, size: s, restore: rest });
             document.getElementById('adm-set-gold').value = player.gold;
-            pushLog(`🧪 Comprou Poção de ${type} ${q} ${s}.`);
             renderUI();
         }
 
         function usePotionType(type) {
             let idx = player.potions.findIndex(p => p.type === type);
-            if (idx === -1) { pushLog(`❌ Você não tem nenhuma poção de ${type} na bolsa!`); return; }
+            if (idx === -1) { pushLog(`❌ Sem poções de ${type}!`); return; }
             let pot = player.potions.splice(idx, 1)[0];
-
             if (type === "HP") player.hp = Math.min(player.maxHp, player.hp + pot.restore);
             if (type === "MP") player.mp = Math.min(player.maxMp, player.mp + pot.restore);
-            
-            pushLog(`🧪 Usou Poção de ${type} [${pot.quality}]. Restaurou +${pot.restore}.`);
+            pushLog(`🧪 Usou Poção de ${type}. Recobrou +${pot.restore}.`);
             renderUI();
         }
 
-        // LAB ADM MODIFICADORES
         function admModify(type) {
             if (type === 'gold') { player.gold = parseInt(document.getElementById('adm-set-gold').value) || 0; }
             if (type === 'lvl') { 
@@ -693,10 +645,10 @@
 
         function spawnDebugMob() {
             mapMonsters.push({
-                x: canvas.width / 2, y: canvas.height / 2 - 40, radius: 14,
-                name: "Alvo BugTest", emoji: "🐛", hp: 120, maxHp: 120, atk: 5, exp: 50, vx: 0.2, vy: -0.2
+                x: canvas.width / 2, y: canvas.height / 2, radius: 14,
+                name: "Alvo BugTest", emoji: "🐛", hp: 120, maxHp: 120, atk: 5, exp: 50, vx: 0.3, vy: -0.3
             });
-            pushLog("⚙️ ADM infundiu uma lagarta de teste no centro do canvas.");
+            pushLog("⚙️ ADM invocou Monstro de Teste no centro.");
         }
 
         function renderPortals() {
