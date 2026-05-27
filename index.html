@@ -3,322 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMORPG: Chronicles of the Void</title>
+    <title>Retro MMORPG: Pixel Chronicles</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
-        body { background-color: #08080c; color: #c4c4cc; margin: 0; padding: 15px; }
-        h1, h2, h3, h4 { color: #ff3344; text-shadow: 2px 2px #000; margin: 0 0 10px 0; text-transform: uppercase; }
+        /* Estilização Geral Estilo Pixel Art de 8/16-bits */
+        * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; image-rendering: pixelated; }
+        body { background-color: #1a1311; color: #f4edd4; margin: 0; padding: 15px; }
+        h1, h2, h3, h4 { color: #ff453a; text-shadow: 3px 3px #000; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
         
-        .grid-layout { display: grid; grid-template-columns: 420px 1fr; gap: 15px; max-width: 1400px; margin: 0 auto; }
-        @media (max-width: 1000px) { .grid-layout { grid-template-columns: 1fr; } }
+        .grid-layout { display: grid; grid-template-columns: 460px 1fr; gap: 16px; max-width: 1500px; margin: 0 auto; }
+        @media (max-width: 1100px) { .grid-layout { grid-template-columns: 1fr; } }
         
-        .panel { background: #101018; border: 2px solid #222230; padding: 15px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.8); }
+        /* Molduras de Pixel Art (Bordas Duplas Sólidas) */
+        .panel { background: #2c201c; border: 4px solid #110a08; outline: 4px solid #4a352f; padding: 16px; margin: 4px; box-shadow: 0 8px 0 #000; }
         
-        /* Sistema de Abas Estilo MMO */
-        .mmo-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 12px; }
-        .mmo-tabs button { padding: 8px 2px; font-size: 10px; background: #181822; border: 1px solid #333; color: #aaa; cursor: pointer; text-transform: uppercase; font-weight: bold; }
-        .mmo-tabs button.active { background: #ff3344; color: #000; border-color: #ff6677; }
+        /* Abas Estilo RPG Clássico */
+        .mmo-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 15px; }
+        .mmo-tabs button { padding: 10px 2px; font-size: 11px; background: #3d2c25; border: 3px solid #110a08; color: #f4edd4; cursor: pointer; text-transform: uppercase; font-weight: bold; }
+        .mmo-tabs button.active { background: #bd3a28; border-color: #ff453a; color: #fff; }
 
-        /* Tela do Mapa / Game Screen */
-        .game-screen { background: #030305; border: 3px solid #333348; border-radius: 4px; padding: 10px; position: relative; }
-        #map-canvas { background: #000; color: #55ff55; font-size: 18px; line-height: 18px; letter-spacing: 2px; white-space: pre; overflow: hidden; text-align: center; border: 1px solid #111; user-select: none; }
+        /* Tela do Mapa Pixelated */
+        .game-screen { background: #1c120c; border: 4px solid #110a08; outline: 4px solid #5a453f; padding: 12px; }
+        #map-canvas { background: #0c0705; color: #55ff55; font-size: 20px; line-height: 20px; letter-spacing: 3px; white-space: pre; overflow: hidden; text-align: center; border: 4px solid #110a08; padding: 10px; user-select: none; font-weight: bold; }
         
-        /* Controles Virtuais */
-        .dpad { display: grid; grid-template-columns: repeat(3, 50px); grid-template-rows: repeat(3, 50px); gap: 5px; justify-content: center; margin-top: 10px; }
-        .dpad button { background: #222; border: 2px solid #444; color: white; font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 6px; }
-        .dpad button:active { background: #444; }
+        /* D-Pad e Controles */
+        .dpad { display: grid; grid-template-columns: repeat(3, 54px); grid-template-rows: repeat(3, 54px); gap: 6px; justify-content: center; margin-top: 12px; }
+        .dpad button { background: #4a352f; border: 3px solid #110a08; color: #fff; font-size: 20px; font-weight: bold; cursor: pointer; }
+        .dpad button:active { background: #2c201c; }
 
-        /* Barras de Status */
-        .bar { background: #151520; width: 100%; height: 20px; border: 1px solid #333; margin: 4px 0; border-radius: 3px; overflow: hidden; position: relative; }
-        .bar-fill { height: 100%; transition: width 0.1s ease; }
-        .hp-fill { background: linear-gradient(90deg, #aa1111, #ff3334); }
-        .mp-fill { background: linear-gradient(90deg, #1111aa, #3344ff); }
-        .xp-fill { background: linear-gradient(90deg, #11aa11, #33ff44); }
-        .bar-text { position: absolute; width: 100%; text-align: center; font-size: 11px; font-weight: bold; line-height: 18px; color: #fff; text-shadow: 1px 1px #000; }
+        /* Barras de Atributo Retrô */
+        .bar { background: #110a08; width: 100%; height: 22px; border: 3px solid #4a352f; margin: 6px 0; overflow: hidden; position: relative; }
+        .bar-fill { height: 100%; width: 100%; transition: width 0.1s steps(10); }
+        .hp-fill { background: #bd3a28; }
+        .mp-fill { background: #285cbd; }
+        .xp-fill { background: #3abd28; }
+        .bar-text { position: absolute; width: 100%; text-align: center; font-size: 11px; font-weight: bold; line-height: 16px; color: #fff; text-shadow: 2px 2px #000; }
 
-        .flex-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 6px; background: #161622; border-radius: 4px; font-size: 12px; }
-        .log-terminal { background: #040406; border: 1px solid #222; height: 130px; overflow-y: auto; padding: 8px; font-size: 11px; color: #8a8a99; border-radius: 4px; margin-top: 10px; }
+        .flex-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 8px; background: #3d2c25; border: 2px solid #110a08; font-size: 12px; }
+        .log-terminal { background: #0c0705; border: 3px solid #110a08; height: 140px; overflow-y: auto; padding: 8px; font-size: 11px; color: #c4bca3; line-height: 1.5; }
         
-        .tag { background: #1b1b2a; border: 1px solid #334; padding: 2px 6px; border-radius: 3px; font-size: 11px; }
-        .adm-box { border: 1px dashed #8a2be2; background: #151020; padding: 10px; margin-top: 5px; border-radius: 4px; }
+        .tag { background: #231814; border: 2px solid #110a08; padding: 4px 6px; font-size: 11px; }
+        .adm-box { border: 3px dashed #bd28a9; background: #2a1427; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         
-        button.action-btn { background: #a11; border: 1px solid #f33; border-bottom: 3px solid #600; color: white; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 3px; text-transform: uppercase; font-size: 11px; }
-        button.action-btn:disabled { background: #222 !important; border-color: #333 !important; color: #555 !important; border-bottom: 1px solid #111; }
+        /* Botões Pixel Art */
+        button.action-btn { background: #962d1f; border: 3px solid #110a08; color: white; font-weight: bold; cursor: pointer; padding: 6px 12px; text-transform: uppercase; font-size: 11px; box-shadow: 0 4px 0 #000; }
+        button.action-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 #000; }
+        button.action-btn:disabled { background: #443a37 !important; color: #776e6b !important; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* Árvore de Habilidades */
+        .talent-tree { display: grid; grid-template-columns: 1fr; gap: 8px; max-height: 280px; overflow-y: auto; padding-right: 4px; }
+        .talent-node { background: #35251f; border: 2px solid #110a08; padding: 8px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
 
-    <h1 style="text-align: center; font-size: 22px; letter-spacing: 3px; margin-bottom: 15px;">⚔️ CHRONICLES OF THE VOID: MMORPG ⚔️</h1>
+    <h1 style="text-align: center; font-size: 24px; margin-bottom: 15px;">⚔️ PIXEL CHRONICLES MMORPG ⚔️</h1>
 
     <div class="grid-layout">
         
         <div class="panel">
             <div class="mmo-tabs">
                 <button id="tab-hero" class="active" onclick="switchMmoTab('hero')">👤 Herói</button>
+                <button id="tab-skills" onclick="switchMmoTab('skills')">📜 Árvore</button>
                 <button id="tab-forge" onclick="switchMmoTab('forge')">🔨 Forja</button>
                 <button id="tab-shop" onclick="switchMmoTab('shop')">⚖️ Lojas</button>
                 <button id="tab-world" onclick="switchMmoTab('world')">🌌 Portais</button>
-                <button id="tab-adm" onclick="switchMmoTab('adm')">⚙️ ADM</button>
             </div>
 
             <div id="view-hero" class="tab-content">
-                <h3>Registro do Jogador</h3>
+                <h3>Status do Personagem</h3>
                 <div class="flex-row">
-                    <span>Nível: <b id="lbl-lvl" style="color:#ff3344">1</b></span>
-                    <span>💰 Ouro: <b id="lbl-gold" style="color:#ffb703">500</b></span>
+                    <span>Nível: <b id="lbl-lvl" style="color:#ff453a">1</b></span>
+                    <span>💰 Ouro: <b id="lbl-gold" style="color:#ffcc00">500</b></span>
                 </div>
                 <div class="bar"><div id="fill-hp" class="bar-fill hp-fill"></div><div id="txt-hp" class="bar-text">HP</div></div>
                 <div class="bar"><div id="fill-mp" class="bar-fill mp-fill"></div><div id="txt-mp" class="bar-text">MP</div></div>
                 <div class="bar"><div id="fill-xp" class="bar-fill xp-fill"></div><div id="txt-xp" class="bar-text">XP</div></div>
 
-                <div class="flex-row" style="margin-top:10px;">
-                    <span>Classe Atual: <b id="lbl-class" style="color:#00ffff">Nenhum</b></span>
+                <div class="flex-row" style="margin-top:8px; background:#110a08;">
+                    <span>Classe Ativa: <b id="lbl-class" style="color:#5ac8fa">Guerreiro</b></span>
                 </div>
                 
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-bottom:10px;">
-                    <button onclick="changeClass('Guerreiro')" style="font-size:10px; background:#4a1515;">Guerreiro (Buff Físico / Debuff Mágico)</button>
-                    <button onclick="changeClass('Mago')" style="font-size:10px; background:#15154a;">Mago (Alto Dano Mágico / Baixa Defesa)</button>
-                    <button onclick="changeClass('Arqueiro')" style="font-size:10px; background:#154a15;">Arqueiro (Velocidade e Crítico Crônico)</button>
-                    <button onclick="changeClass('Paladino')" style="font-size:10px; background:#4a4a15;">Paladino (Defesa Imbatível / Cura Passiva)</button>
-                    <button onclick="changeClass('Necromante')" style="font-size:10px; background:#33154a;">Necromante (Invocador de Lacaios)</button>
-                    <button onclick="changeClass('Assassino')" style="font-size:10px; background:#222;">Assassino (Dano Verdadeiro / Evasivo)</button>
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:4px; margin-bottom:10px;">
+                    <button onclick="changeClass('Guerreiro')" style="font-size:9px; background:#5c1e16; color:#fff; border:1px solid #000;">Guerreiro</button>
+                    <button onclick="changeClass('Mago')" style="font-size:9px; background:#162e5c; color:#fff; border:1px solid #000;">Mago</button>
+                    <button onclick="changeClass('Arqueiro')" style="font-size:9px; background:#1e5c16; color:#fff; border:1px solid #000;">Arqueiro</button>
+                    <button onclick="changeClass('Paladino')" style="font-size:9px; background:#595c16; color:#fff; border:1px solid #000;">Paladino</button>
+                    <button onclick="changeClass('Necromante')" style="font-size:9px; background:#46165c; color:#fff; border:1px solid #000;">Necro</button>
+                    <button onclick="changeClass('Assassino')" style="font-size:9px; background:#222; color:#fff; border:1px solid #000;">Assassino</button>
                 </div>
 
-                <div class="flex-row"><span>💪 Força: <b id="lbl-str">10</b></span> <button onclick="buyStat('str')">+</button></div>
-                <div class="flex-row"><span>🔮 Inteligência: <b id="lbl-int">10</b></span> <button onclick="buyStat('int')">+</button></div>
-                <div class="flex-row"><span>⚡ Agilidade: <b id="lbl-agi">10</b></span> <button onclick="buyStat('agi')">+</button></div>
-                <p style="font-size:11px; color:#ffb703; margin:2px 0 10px 0;">Pontos Disponíveis: <span id="lbl-points">0</span></p>
+                <p style="font-size:11px; color:#ffcc00; margin:4px 0;">Pontos de Atributo: <span id="lbl-points">0</span></p>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                    <div class="flex-row" style="margin:0;"><span>💪 Força: <b id="lbl-str">10</b></span> <button onclick="buyStat('str')">+</button></div>
+                    <div class="flex-row" style="margin:0;"><span>⚡ Agilidade: <b id="lbl-agi">10</b></span> <button onclick="buyStat('agi')">+</button></div>
+                    <div class="flex-row" style="margin:0;"><span>🔮 Magia: <b id="lbl-mag">10</b></span> <button onclick="buyStat('mag')">+</button></div>
+                    <div class="flex-row" style="margin:0;"><span>🧠 Inteligência: <b id="lbl-int">10</b></span> <button onclick="buyStat('int')">+</button></div>
+                    <div class="flex-row" style="margin:0;"><span>🍀 Sorte: <b id="lbl-luk">10</b></span> <button onclick="buyStat('luk')">+</button></div>
+                    <div class="flex-row" style="margin:0;"><span>🛡️ Defesa: <b id="lbl-def">10</b></span> <button onclick="buyStat('def')">+</button></div>
+                </div>
 
-                <h4>Aparatos Atuais</h4>
-                <div class="flex-row"><span>⚔️ Equipamento: <b id="lbl-weapon" style="color:#8ecae6">Nenhum</b></span></div>
-                <div class="flex-row"><span>🛡️ Armadura: <b id="lbl-armor" style="color:#8ecae6">Nenhum</b></span></div>
-                <div class="flex-row"><span>💀 Invocações Ativas: <b id="lbl-summons" style="color:#9d4edd">0 / 0</b></span></div>
+                <h4 style="margin-top:12px;">Equipamentos Vigentes</h4>
+                <div class="flex-row"><span>⚔️ Arma: <b id="lbl-weapon" style="color:#5ac8fa">Punhal Rústico</b></span></div>
+                <div class="flex-row"><span>🛡️ Armadura: <b id="lbl-armor" style="color:#5ac8fa">Farrapos</b></span></div>
+            </div>
+
+            <div id="view-skills" class="tab-content" style="display:none;">
+                <h3>📜 Árvore de Talentos e Habilidade</h3>
+                <div style="background:#110a08; padding:8px; border:2px solid #4a352f; margin-bottom:10px;">
+                    <span style="font-size:11px; color:#ffcc00; font-weight:bold;">Habilidade Suprema Ativa da Classe:</span>
+                    <p id="lbl-skill-desc" style="font-size:11px; margin:4px 0 0 0; color:#fff; font-style:italic;"></p>
+                </div>
+                <p style="font-size:11px; color:#ffcc00; margin:2px 0 8px 0;">Pontos de Talento Disponíveis: <span id="lbl-talent-points">0</span></p>
+                <div class="talent-tree" id="box-talents"></div>
             </div>
 
             <div id="view-forge" class="tab-content" style="display:none;">
-                <h3>🔨 Estação de Forja Avançada</h3>
-                <div id="forge-list"></div>
-                <h4 style="margin-top:15px;">Seu Inventário de Matérias-Primas</h4>
-                <div id="box-materials-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:4px; max-height:130px; overflow-y:auto;"></div>
+                <h3>🔨 Forja de Armas e Armaduras</h3>
+                <div id="forge-list" style="max-height:160px; overflow-y:auto; margin-bottom:10px; border:1px solid #110a08;"></div>
+                <h4>Inventário de Minérios</h4>
+                <div id="box-materials-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:4px; max-height:100px; overflow-y:auto;"></div>
             </div>
 
             <div id="view-shop" class="tab-content" style="display:none;">
-                <h3>⚖️ Alquimista e Comerciante da Guilda</h3>
+                <h3>⚖️ Comércio da Cidade</h3>
                 <div class="flex-row">
-                    <div><b>🧪 Elixir Concentrado (Restaurador)</b><br><span style="color:#ffb703">Custo: 30 Ouro</span></div>
-                    <button class="action-btn" onclick="buyPotion()">Comprar (Tem: <span id="lbl-pot-count">0</span>)</button>
+                    <div><b>🧪 Elixir de Restauração Completa</b><br><span style="color:#ffcc00">Preço: 35 Ouro</span></div>
+                    <button class="action-btn" onclick="buyPotion()">Comprar (<span id="lbl-pot-count">0</span>)</button>
                 </div>
-                <h4>Vender Matérias para Financiamento</h4>
-                <div id="shop-sell-list" style="max-height:220px; overflow-y:auto; display:grid; gap:4px;"></div>
+                <h4>Liquidar Sobras de Minérios</h4>
+                <div id="shop-sell-list" style="max-height:180px; overflow-y:auto; display:grid; gap:4px;"></div>
             </div>
 
             <div id="view-world" class="tab-content" style="display:none;">
-                <h3>🌌 Seleção de Instâncias</h3>
-                <p style="font-size:11px; color:#777;">Ative um portal para carregar a masmorra no painel direito. Cada mapa tem armadilhas brutas geradas ao entrar.</p>
-                <div id="portal-triggers" style="display:grid; gap:6px;"></div>
+                <h3>🌌 Portais de Caça</h3>
+                <div id="portal-triggers" style="display:grid; gap:6px; max-height:300px; overflow-y:auto;"></div>
             </div>
 
             <div id="view-adm" class="tab-content" style="display:none;">
-                <h3>⚙️ Terminal Master ADM</h3>
+                <h3>⚙️ Painel de Testes ADM</h3>
                 <div class="adm-box">
-                    <button onclick="cheatAdm('gold')" style="background:#550;">+5000 Gold</button>
-                    <button onclick="cheatAdm('mats')" style="background:#055;">+20 Todos Materiais</button>
-                    <button onclick="cheatAdm('lvl')" style="background:#505;">+5 Níveis Completos</button>
-                    <button onclick="cheatAdm('god')" style="background:#500;">Modo Deus (Full HP/MP)</button>
+                    <button onclick="cheatAdm('gold')" style="background:#550; color:#fff;">+5000 Gold</button>
+                    <button onclick="cheatAdm('mats')" style="background:#055; color:#fff;">+50 Mats</button>
+                    <button onclick="cheatAdm('lvl')" style="background:#505; color:#fff;">+5 Níveis</button>
+                    <button onclick="cheatAdm('talents')" style="background:#255; color:#fff;">+5 Talentos</button>
                 </div>
             </div>
         </div>
 
         <div class="panel game-screen">
-            <div class="flex-row" style="background:transparent; padding:0;">
-                <h3 id="txt-map-title" style="margin:0; color:#ffb703;">Vilarejo Central (Lobby)</h3>
-                <span>Andar Atual: <b id="lbl-current-floor" style="color:#fff;">0</b>/25</span>
+            <div class="flex-row" style="background:transparent; border:none; padding:0;">
+                <h3 id="txt-map-title" style="margin:0; color:#ffcc00;">Cidade Inicial (Lobby)</h3>
+                <span>Andar: <b id="lbl-current-floor" style="color:#fff;">0</b>/25</span>
             </div>
 
             <div id="map-canvas"></div>
 
-            <div class="flex-row" style="margin-top:10px; background:#0e0e14;">
-                <span style="color:#aaa;">Legenda: <b style="color:#fff">@</b> Você | <b style="color:#ff3344">M</b> Mob | <b style="color:#ffcc00">#</b> Parede | <b style="color:#ff00ff">☠</b> Armadilha | <b style="color:#00ffff">S</b> Lacaio | <b style="color:#00ff00">&gt;</b> Saída</span>
+            <div class="flex-row" style="margin-top:10px; background:#110a08; border-color:#4a352f;">
+                <span style="font-size:10px; color:#c4bca3;">Legenda: <b style="color:#fff">@</b> Você | <b style="color:#ff453a">M</b> Monstro | <b style="color:#ffcc00">#</b> Parede | <b style="color:#ff00ff">☠</b> Armadilha | <b style="color:#af52de">S</b> Esqueleto | <b style="color:#34c759">&gt;</b> Saída</span>
             </div>
 
             <div class="dpad">
                 <div></div><button onclick="movePlayer(0, -1)">▲</button><div></div>
-                <button onclick="movePlayer(-1, 0)">◀</button><button onclick="playerInteract()" style="background:#800; font-size:12px;">ACTION</button><button onclick="movePlayer(1, 0)">▶</button>
+                <button onclick="movePlayer(-1, 0)">◀</button><button onclick="playerInteract()" style="background:#962d1f; font-size:11px;">ATTACK</button><button onclick="movePlayer(1, 0)">▶</button>
                 <div></div><button onclick="movePlayer(0, 1)">▼</button><div></div>
             </div>
 
-            <div class="log-terminal" id="terminal-logs"></div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:10px;">
+                <button class="action-btn" onclick="useClassSkill()" style="background:#007aff;">💥 Usar Skill Ativa</button>
+                <button class="action-btn" onclick="consumePotionInCombat()" style="background:#34c759;">🧪 Tomar Poti</button>
+            </div>
+
+            <div class="log-terminal" id="terminal-logs" style="margin-top:12px;"></div>
         </div>
 
     </div>
 
     <script>
-        // CONFIGURAÇÕES DO BANCO DE DADOS
+        // BANCO DE DADOS DO MMORPG
         const instances = [
-            { id: 1, name: "Caverna dos Ratos", lvl: 1, mat: "Cobre", boss: "Rei Rato Progenitor", price: 8 },
-            { id: 2, name: "Minas Esquecidas", lvl: 5, mat: "Ferro", boss: "Executor de Ferro", price: 15 },
-            { id: 3, name: "Catacumbas Sombrias", lvl: 10, mat: "Aço", boss: "Lich Necromante", price: 25 },
-            { id: 4, name: "Ninho dos Dragões", lvl: 18, mat: "Mithril", boss: "Dragão de Cinzas", price: 40 },
-            { id: 5, name: "Ruínas de Plasma", lvl: 26, mat: "Titanio", boss: "Autômato de Plasma", price: 60 },
-            { id: 6, name: "Labirinto Celestial", lvl: 35, mat: "Cosmio", boss: "Sentinela Estelar", price: 85 },
-            { id: 7, name: "Cripta Ancestral", lvl: 45, mat: "Divino", boss: "Construto Eterno", price: 120 },
-            { id: 8, name: "Vazio Corrompido", lvl: 55, mat: "Baryon", boss: "Abominação do Vazio", price: 150 },
-            { id: 9, name: "Inferno de Sangue", lvl: 68, mat: "Netherita", boss: "Lorde de Sangue", price: 200 },
-            { id: 10, name: "Núcleo do Infinito", lvl: 80, mat: "Singularidade", boss: "Tecelão Universal", price: 300 }
+            { id: 1, name: "Caverna dos Ratos", lvl: 1, mat: "Cobre", boss: "Rei Rato Progenitor", price: 10 },
+            { id: 2, name: "Minas Esquecidas", lvl: 5, mat: "Ferro", boss: "Executor de Ferro", price: 20 },
+            { id: 3, name: "Catacumbas Sombrias", lvl: 10, mat: "Aço", boss: "Lich Rei Necromante", price: 35 },
+            { id: 4, name: "Ninho dos Dragões", lvl: 18, mat: "Mithril", boss: "Dragão Vermelho Ancestral", price: 55 }
         ];
 
-        const materialsList = ["Cobre", "Ferro", "Aço", "Mithril", "Titanio", "Cosmio", "Divino", "Baryon", "Netherita", "Singularidade", "Couro", "Tecido Mágico", "Essência Sombria", "Pó Estelar"];
+        const materialsList = ["Cobre", "Ferro", "Aço", "Mithril", "Couro", "Essência Sombria"];
 
         const weaponTiers = [
-            { id: 0, wName: "Punhal Rústico", aName: "Farrapos", dmg: 5, def: 1, mat: null, qty: 0 },
-            { id: 1, wName: "Arco de Caça / Clava de Cobre", aName: "Couro Batido", dmg: 15, def: 5, mat: "Cobre", qty: 6 },
-            { id: 2, wName: "Katana de Ferro", aName: "Manto de Malha", dmg: 32, def: 12, mat: "Ferro", qty: 10 },
-            { id: 3, wName: "Foice de Aço Crítico", aName: "Armadura de Placas", dmg: 60, def: 22, mat: "Aço", qty: 15 },
-            { id: 4, wName: "Cajado Rúnico de Mithril", aName: "Égide Rúnica", dmg: 110, def: 38, mat: "Mithril", qty: 20 },
-            { id: 5, wName: "Montante de Titânio Forjado", aName: "Placa Core", dmg: 210, def: 65, mat: "Titanio", qty: 25 },
-            { id: 6, wName: "Lâmina Cósmica do Infinito", aName: "Égide de Plasma", dmg: 390, def: 110, mat: "Cosmio", qty: 30 },
-            { id: 7, wName: "Cetro Supremo Divino", aName: "Armadura Transcendente", dmg: 750, def: 200, mat: "Divino", qty: 40 }
+            { id: 0, wName: "Punhal Rústico", aName: "Farrapos", dmg: 6, def: 1, mat: null, qty: 0 },
+            { id: 1, wName: "Espada de Cobre Retrô", aName: "Malha de Cobre", dmg: 16, def: 6, mat: "Cobre", qty: 6 },
+            { id: 2, wName: "Machado Espinhoso de Ferro", aName: "Placa de Ferro", dmg: 35, def: 14, mat: "Iron", qty: 12 },
+            { id: 3, wName: "Foice de Aço Forjado", aName: "Cota de Aço Pesada", dmg: 68, def: 25, mat: "Aço", qty: 18 },
+            { id: 4, wName: "Cajado Cósmico de Mithril", aName: "Roupão Rúnico Guardião", dmg: 125, def: 42, mat: "Mithril", qty: 25 }
         ];
 
-        const classModifiers = {
-            "Guerreiro": { str: 6, int: -4, agi: 2, desc: "Buff em força e vitalidade, forte penalidade mágica." },
-            "Mago": { str: -3, int: 8, agi: 1, desc: "Conjura magias brutais baseado em INT. Defesa debilitada." },
-            "Arqueiro": { str: 2, int: 0, agi: 6, desc: "Garante alta taxa de acertos e perfuração por agilidade." },
-            "Paladino": { str: 4, int: 2, agi: -2, desc: "Forte mitigação de danos e auto-regeneração." },
-            "Necromante": { str: -2, int: 5, agi: 1, desc: "Invocador. Ergue lacaios mortos-vivos (S) para lutar." },
-            "Assassino": { str: 3, int: -1, agi: 6, desc: "Alta capacidade evasiva e altíssimo multiplicador crítico." }
+        const classesData = {
+            "Guerreiro": { desc: "Skill [Golpe Impactante]: Causa 250% de dano baseado em Força. Gasta 10 MP.", action: () => castStrikeDmg(2.5, 'str', 10) },
+            "Mago": { desc: "Skill [Explosão de Meteoro]: Dano massivo na sala baseado em Magia. Gasta 20 MP.", action: () => castStrikeDmg(4.0, 'mag', 20) },
+            "Arqueiro": { desc: "Skill [Disparo Concentrado]: Dano perfurante alto baseado em Agilidade. Gasta 8 MP.", action: () => castStrikeDmg(2.8, 'agi', 8) },
+            "Paladino": { desc: "Skill [Bênção Sagrada]: Restaura 40% da vida máxima instantaneamente. Gasta 15 MP.", action: () => castHealSkill(0.40, 15) },
+            "Necromante": { desc: "Skill [Erguer Mortos]: Invoca lacaios (S) que atacam alvos a cada turno. Gasta 12 MP.", action: () => castSummonSkill(12) },
+            "Assassino": { desc: "Skill [Ataque Furtivo]: Executa dano massivo baseado em Sorte e Agilidade. Gasta 10 MP.", action: () => castStrikeDmg(3.5, 'luk', 10) }
         };
 
-        const mobTypes = [
-            { char: 'M', name: "Rato Infectado", hp: 30, atk: 5, exp: 12, trait: "Normal" },
-            { char: 'M', name: "Esqueleto", hp: 55, atk: 10, exp: 25, trait: "Resistente" },
-            { char: 'M', name: "Gárgula de Pedra", hp: 90, atk: 18, exp: 50, trait: "Escudo" },
-            { char: 'M', name: "Gomem de Plasma", hp: 160, atk: 30, exp: 90, trait: "Evasivo" },
-            { char: 'M', name: "Demônio de Fogo", hp: 300, atk: 55, exp: 180, trait: "Dano Contínuo" }
-        ];
+        // ÁRVORES DE TALENTOS (PASSIVAS)
+        let talentTrees = {
+            "Guerreiro": [
+                { id: "g1", name: "Coração de Titã", desc: "+20 HP Máximo por ponto", allocation: 0, max: 5, apply: () => { player.maxHp += 20; } },
+                { id: "g2", name: "Lâmina Afiada", desc: "+5 Dano Físico fixo por ponto", allocation: 0, max: 5, apply: () => {} }
+            ],
+            "Mago": [
+                { id: "m1", name: "Fluxo de Mana", desc: "+15 MP Máximo por ponto", allocation: 0, max: 5, apply: () => { player.maxMp += 15; } },
+                { id: "m2", name: "Amplificação Arcana", desc: "+10% Dano de Magia", allocation: 0, max: 5, apply: () => {} }
+            ],
+            "Arqueiro": [
+                { id: "a1", name: "Passos Leves", desc: "+3 Agilidade por ponto", allocation: 0, max: 5, apply: () => { player.agi += 3; } },
+                { id: "a2", name: "Olho de Lince", desc: "+5% de chance de Crítico", allocation: 0, max: 5, apply: () => {} }
+            ],
+            "Paladino": [
+                { id: "p1", name: "Baluarte", desc: "+4 Defesa por ponto", allocation: 0, max: 5, apply: () => { player.def += 4; } },
+                { id: "p2", name: "Aura Regenerativa", desc: "+3 HP recuperado por passo", allocation: 0, max: 5, apply: () => {} }
+            ],
+            "Necromante": [
+                { id: "n1", name: "Almas Famintas", desc: "+4 Inteligência por ponto", allocation: 0, max: 5, apply: () => { player.int += 4; } },
+                { id: "n2", name: "Exército Imortal", desc: "+1 Limite de Esqueletos simultâneos", allocation: 0, max: 5, apply: () => {} }
+            ],
+            "Assassino": [
+                { id: "as1", name: "Mão de Midas", desc: "+15% Ouro ganho de monstros", allocation: 0, max: 5, apply: () => {} },
+                { id: "as2", name: "Golpe de Sorte", desc: "+3 Sorte por ponto", allocation: 0, max: 5, apply: () => { player.luk += 3; } }
+            ]
+        };
 
-        // ENGINE STATE
+        // VARIÁVEIS DO MOTOR
         let player = {
-            x: 2, y: 2, lvl: 1, xp: 0, nextXp: 120, gold: 500, hp: 100, maxHp: 100, mp: 40, maxMp: 40, potions: 3,
-            str: 10, int: 10, agi: 10, points: 0, currentClass: "Guerreiro", weaponTier: 0, armorTier: 0,
-            materials: {}
+            x: 2, y: 2, lvl: 1, xp: 0, nextXp: 100, gold: 500, hp: 100, maxHp: 100, mp: 40, maxMp: 40, potions: 3,
+            str: 10, agi: 10, mag: 10, int: 10, luk: 10, def: 10, points: 0, talentPoints: 0,
+            currentClass: "Guerreiro", weaponTier: 0, armorTier: 0, materials: {}
         };
         materialsList.forEach(m => player.materials[m] = 0);
 
-        let mapWidth = 22;
-        let mapHeight = 11;
-        let currentMap = [];
-        let mapMonsters = [];
-        let mapSummons = [];
-        let mapTraps = [];
+        let mapWidth = 22; let mapHeight = 11;
+        let currentMap = []; let mapMonsters = []; let mapSummons = []; let mapTraps = [];
         let dungeonState = { active: false, data: null, floor: 0 };
 
         function initGame() {
             buildLobby();
             renderPortals();
             switchMmoTab('hero');
-            
-            // Suporte a teclado físico (W, A, S, D)
+
             window.addEventListener('keydown', (e) => {
                 if (!dungeonState.active) return;
-                let key = e.key.toLowerCase();
-                if (key === 'w' || key === 'arrowup') movePlayer(0, -1);
-                if (key === 's' || key === 'arrowdown') movePlayer(0, 1);
-                if (key === 'a' || key === 'arrowleft') movePlayer(-1, 0);
-                if (key === 'd' || key === 'arrowright') movePlayer(1, 0);
-                if (key === 'e' || key === ' ') playerInteract();
+                let k = e.key.toLowerCase();
+                if (k === 'w' || k === 'arrowup') movePlayer(0, -1);
+                if (k === 's' || k === 'arrowdown') movePlayer(0, 1);
+                if (k === 'a' || k === 'arrowleft') movePlayer(-1, 0);
+                if (k === 'd' || k === 'arrowright') movePlayer(1, 0);
+                if (k === 'e') playerInteract();
             });
         }
 
         function buildLobby() {
-            dungeonState.active = false;
-            dungeonState.floor = 0;
+            dungeonState.active = false; dungeonState.floor = 0;
             player.x = 10; player.y = 5;
             mapMonsters = []; mapSummons = []; mapTraps = [];
-            
             currentMap = [];
             for (let y = 0; y < mapHeight; y++) {
                 currentMap[y] = [];
                 for (let x = 0; x < mapWidth; x++) {
-                    if (y === 0 || y === mapHeight - 1 || x === 0 || x === mapWidth - 1) {
-                        currentMap[y][x] = '#';
-                    } else {
-                        currentMap[y][x] = '.';
-                    }
+                    currentMap[y][x] = (y===0 || y===mapHeight-1 || x===0 || x===mapWidth-1) ? '#' : '.';
                 }
             }
-            document.getElementById('txt-map-title').innerText = "Vilarejo Central (Lobby)";
+            document.getElementById('txt-map-title').innerText = "Cidade Inicial (Lobby)";
             document.getElementById('lbl-current-floor').innerText = "0";
             drawCanvas();
         }
 
         function buildDungeonFloor() {
-            mapMonsters = []; mapSummons = []; mapTraps = [];
+            mapMonsters = []; mapTraps = [];
             player.x = 2; player.y = 5;
-            
             let mult = dungeonState.data.id * 4 + dungeonState.floor;
 
-            // Criar Sala Retangular Padrão
             currentMap = [];
             for (let y = 0; y < mapHeight; y++) {
                 currentMap[y] = [];
                 for (let x = 0; x < mapWidth; x++) {
-                    if (y === 0 || y === mapHeight - 1 || x === 0 || x === mapWidth - 1) {
-                        currentMap[y][x] = '#';
-                    } else {
-                        currentMap[y][x] = '.';
-                    }
+                    currentMap[y][x] = (y===0 || y===mapHeight-1 || x===0 || x===mapWidth-1) ? '#' : '.';
                 }
             }
-
-            // Inserir Saída para o Próximo Andar
             currentMap[5][20] = '>';
 
-            // Geração de Obstáculos/Paredes internas aleatórias
-            for (let i = 0; i < 8; i++) {
-                let rx = Math.floor(Math.random() * (mapWidth - 4)) + 2;
-                let ry = Math.floor(Math.random() * (mapHeight - 4)) + 2;
-                if(rx !== player.x && rx !== 20) currentMap[ry][rx] = '#';
-            }
-
-            // Geração de Armadilhas Ocultas/Aleatórias
+            // Armadilhas Aleatórias
             for (let i = 0; i < 4; i++) {
-                let rx = Math.floor(Math.random() * (mapWidth - 4)) + 2;
-                let ry = Math.floor(Math.random() * (mapHeight - 4)) + 2;
-                if (currentMap[ry][rx] === '.') mapTraps.push({ x: rx, y: ry, active: true });
+                let rx = Math.floor(Math.random() * (mapWidth-4)) + 2;
+                let ry = Math.floor(Math.random() * (mapHeight-4)) + 2;
+                if(currentMap[ry][rx] === '.') mapTraps.push({ x: rx, y: ry });
             }
 
-            // Spawn de Monstros
-            let mobCount = dungeonState.floor === 25 ? 1 : 2 + Math.floor(Math.random() * 2);
+            // Monstros
+            let mobCount = dungeonState.floor === 25 ? 1 : 3;
             if (dungeonState.floor < 25) {
                 for (let i = 0; i < mobCount; i++) {
-                    let rx = Math.floor(Math.random() * 10) + 9;
-                    let ry = Math.floor(Math.random() * (mapHeight - 2)) + 1;
-                    if (currentMap[ry][rx] === '.') {
-                        let proto = mobTypes[Math.floor(Math.random() * mobTypes.length)];
-                        mapMonsters.push({
-                            x: rx, y: ry, name: proto.name, char: 'M',
-                            hp: proto.hp + (mult * 6), maxHp: proto.hp + (mult * 6),
-                            atk: proto.atk + (mult * 1.5), exp: proto.exp + mult, isBoss: false
-                        });
-                    }
+                    let rx = Math.floor(Math.random() * 8) + 10;
+                    let ry = Math.floor(Math.random() * (mapHeight-2)) + 1;
+                    mapMonsters.push({
+                        x: rx, y: ry, name: "Monstro da Fenda", char: 'M',
+                        hp: 30 + (mult * 8), maxHp: 30 + (mult * 8), atk: 5 + (mult * 1.5), exp: 20 + mult, isBoss: false
+                    });
                 }
             } else {
-                // Instanciar Boss no Último Andar (25)
                 mapMonsters.push({
                     x: 15, y: 5, name: dungeonState.data.boss, char: '👑',
-                    hp: 400 + (mult * 30), maxHp: 400 + (mult * 30),
-                    atk: 45 + (mult * 4), exp: 500 * dungeonState.data.id, isBoss: true
+                    hp: 500 + (mult * 40), maxHp: 500 + (mult * 40), atk: 45 + (mult * 3), exp: 1000, isBoss: true
                 });
             }
 
-            // Re-invocar mortos-vivos automaticamente se for Necromante
-            if (player.currentClass === "Necromante") {
-                summonSkeletons();
-            }
-
             document.getElementById('lbl-current-floor').innerText = dungeonState.floor;
-            pushLog(`⚔️ Você desceu para o Andar ${dungeonState.floor} de ${dungeonState.data.name}!`);
+            pushLog(`🌌 Entrou no andar ${dungeonState.floor} de ${dungeonState.data.name}`);
             drawCanvas();
         }
 
@@ -327,23 +327,20 @@
             for (let y = 0; y < mapHeight; y++) {
                 for (let x = 0; x < mapWidth; x++) {
                     if (x === player.x && y === player.y) {
-                        buffer += `<span style="color:#ffffff; font-weight:bold;">@</span>`;
+                        buffer += `<span style="color:#ffffff;">@</span>`;
                     } else {
-                        let monsterFound = mapMonsters.find(m => m.x === x && m.y === y);
-                        let summonFound = mapSummons.find(s => s.x === x && s.y === y);
-                        let trapFound = mapTraps.find(t => t.x === x && t.y === y);
+                        let mob = mapMonsters.find(m => m.x === x && m.y === y);
+                        let sum = mapSummons.find(s => s.x === x && s.y === y);
+                        let trap = mapTraps.find(t => t.x === x && t.y === y);
 
-                        if (monsterFound) {
-                            buffer += `<span style="color:#ff3344; font-weight:bold;">${monsterFound.char}</span>`;
-                        } else if (summonFound) {
-                            buffer += `<span style="color:#9d4edd; font-weight:bold;">S</span>`;
-                        } else if (trapFound) {
-                            buffer += `<span style="color:#ff00ff;">☠</span>`;
-                        } else {
+                        if (mob) buffer += `<span style="color:#ff453a;">${mob.char}</span>`;
+                        else if (sum) buffer += `<span style="color:#af52de;">S</span>`;
+                        else if (trap) buffer += `<span style="color:#ff00ff;">☠</span>`;
+                        else {
                             let tile = currentMap[y][x];
-                            if (tile === '#') buffer += `<span style="color:#444455;">#</span>`;
-                            else if (tile === '>') buffer += `<span style="color:#00ff00; font-weight:bold;">&gt;</span>`;
-                            else buffer += `<span style="color:#222;">.</span>`;
+                            if (tile === '#') buffer += `<span style="color:#4a352f;">#</span>`;
+                            else if (tile === '>') buffer += `<span style="color:#34c759;">&gt;</span>`;
+                            else buffer += `<span style="color:#3d2c25;">.</span>`;
                         }
                     }
                 }
@@ -354,259 +351,219 @@
         }
 
         function movePlayer(dx, dy) {
-            let nx = player.x + dx;
-            let ny = player.y + dy;
-
-            if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight) return;
+            let nx = player.x + dx; let ny = player.y + dy;
             if (currentMap[ny][nx] === '#') return;
 
-            // Bloquear passagem se bater direto em mob (obriga a usar ação/batalha automática ao se mover)
             let m = mapMonsters.find(mob => mob.x === nx && mob.y === ny);
-            if (m) {
-                combatRound(m);
-                return;
+            if (m) { combatRound(m); return; }
+
+            player.x = nx; player.y = ny;
+
+            // Passiva Paladino (Cura por passos)
+            let p2Node = talentTrees["Paladino"][1];
+            if (player.currentClass === "Paladino" && p2Node.allocation > 0) {
+                player.hp = Math.min(player.maxHp, player.hp + (p2Node.allocation * 3));
             }
 
-            player.x = nx;
-            player.y = ny;
-
-            // Trigger de Armadilhas
+            // Trigger Armadilha
             let tIdx = mapTraps.findIndex(t => t.x === player.x && t.y === player.y);
             if (tIdx !== -1) {
-                let trapDmg = Math.floor(10 + player.lvl * 2);
-                player.hp -= trapDmg;
-                pushLog(`💥 Armadilha acionada! Você tomou ${trapDmg} de dano real.`);
+                player.hp -= 15; pushLog("💥 Ativou uma armadilha! -15 HP.");
                 mapTraps.splice(tIdx, 1);
                 if (player.hp <= 0) playerDeath();
             }
 
-            // Movimentar lacaios do necromante para seguir o player
-            mapSummons.forEach(s => {
-                s.x = player.x - dx;
-                s.y = player.y - dy;
-            });
-
-            // Inteligência Artificial Simples dos Mobs (Andam em direção ao player)
-            if (dungeonState.active && Math.random() < 0.4) {
-                mapMonsters.forEach(mob => {
-                    if (Math.abs(mob.x - player.x) <= 3 && Math.abs(mob.y - player.y) <= 3) {
-                        let mx = mob.x + Math.sign(player.x - mob.x);
-                        let my = mob.y + Math.sign(player.y - mob.y);
-                        if (currentMap[my][mx] !== '#' && !mapMonsters.some(o => o.x === mx && o.y === my)) {
-                            mob.x = mx; mob.y = my;
-                        }
-                    }
-                });
-            }
+            // Movimentação de Summons
+            mapSummons.forEach(s => { s.x = player.x; s.y = player.y; });
 
             drawCanvas();
         }
 
         function playerInteract() {
             if (currentMap[player.y][player.x] === '>') {
-                if (dungeonState.floor === 25) {
-                    pushLog("🏆 Você já limpou a masmorra! Volte pelas abas.");
-                    return;
-                }
-                dungeonState.floor++;
-                buildDungeonFloor();
-                return;
+                if(dungeonState.floor === 25) { pushLog("🏆 Instância concluída com sucesso!"); return; }
+                dungeonState.floor++; buildDungeonFloor(); return;
             }
-
-            // Procurar inimigo em cruz adjacente para desferir golpe focado
             let targets = mapMonsters.filter(m => Math.abs(m.x - player.x) + Math.abs(m.y - player.y) === 1);
-            if (targets.length > 0) {
-                combatRound(targets[0]);
-            } else {
-                pushLog("💨 Nenhum oponente ao alcance do seu ataque.");
-            }
+            if (targets.length > 0) combatRound(targets[0]);
         }
 
         function combatRound(mob) {
-            // CÁLCULO DE ATRIBUTOS E MODIFICADORES DE CLASSE (BUFFS/DEBUFFS)
-            let mod = classModifiers[player.currentClass];
-            let effectiveStr = player.str + (mod.str || 0);
-            let effectiveInt = player.int + (mod.int || 0);
-            let effectiveAgi = player.agi + (mod.agi || 0);
-
-            // Dano do Player
-            let weaponDmg = weaponTiers[player.weaponTier].dmg;
-            let baseDmg = weaponDmg + Math.floor(effectiveStr * 1.0);
+            let dmg = weaponTiers[player.weaponTier].dmg + Math.floor(player.str * 0.8);
             
-            if (player.currentClass === "Mago" && player.mp >= 5) {
-                player.mp -= 5;
-                baseDmg += Math.floor(effectiveInt * 1.8);
-                pushLog(`🔮 Arcana! Dano mágico amplificado.`);
+            // Passiva Arqueiro (Crítico)
+            let a2Node = talentTrees["Arqueiro"][1];
+            let critChance = 0.05 + (player.luk * 0.01);
+            if (player.currentClass === "Arqueiro" && a2Node.allocation > 0) critChance += (a2Node.allocation * 0.05);
+
+            if (Math.random() < critChance) { dmg = Math.floor(dmg * 2); pushLog("⚡ CRÍTICO!"); }
+
+            // Ataque dos Summons do Necromante
+            if (player.currentClass === "Necromante" && mapSummons.length > 0) {
+                let sDmg = mapSummons.length * (4 + Math.floor(player.int * 0.3));
+                mob.hp -= sDmg; pushLog(`💀 Esqueletos morderam o alvo causando ${sDmg} de dano.`);
             }
 
-            // Crítico do Assassino/Arqueiro
-            let critChance = player.currentClass === "Assassino" ? 0.40 : 0.08 + (effectiveAgi * 0.01);
-            if (Math.random() < critChance) {
-                baseDmg = Math.floor(baseDmg * 2);
-                pushLog("⚡ IMPACTO CRÍTICO!");
-            }
-
-            // Lacaios do Necromante atacam antes
-            if (player.currentClass === "Necromante") {
-                let summonDmg = mapSummons.length * (5 + Math.floor(effectiveInt * 0.4));
-                mob.hp -= summonDmg;
-                if(summonDmg > 0) pushLog(`💀 Seus Esqueletos causaram ${summonDmg} de dano no alvo.`);
-            }
-
-            mob.hp -= baseDmg;
-            pushLog(`⚔️ Causou ${baseDmg} de dano em ${mob.name}. (Inimigo HP: ${Math.max(0, mob.hp)}/${mob.maxHp})`);
+            mob.hp -= dmg;
+            pushLog(`⚔️ Causou ${dmg} dano ao inimigo (${Math.max(0, mob.hp)} HP).`);
 
             if (mob.hp <= 0) {
-                pushLog(`✨ ${mob.name} desmoronou!`);
-                player.xp += mob.exp;
-                player.gold += Math.floor(mob.exp * 0.5);
-                
-                // Drop de material específico da instância mais drops raros secundários
-                player.materials[dungeonState.data.mat] += mob.isBoss ? 8 : 1;
-                if(Math.random() < 0.3) player.materials["Couro"]++;
-                if(Math.random() < 0.2) player.materials["Essência Sombria"]++;
+                pushLog(`✨ Inimigo derrotado!`);
+                let goldGained = Math.floor(mob.exp * 0.4);
+                // Passiva Assassino (Mão de Midas)
+                let as1Node = talentTrees["Assassino"][0];
+                if(player.currentClass === "Assassino" && as1Node.allocation > 0) goldGained = Math.floor(goldGained * (1 + as1Node.allocation * 0.15));
 
-                // Remover Mob
+                player.gold += goldGained; player.xp += mob.exp;
+                player.materials[dungeonState.data.mat] += mob.isBoss ? 6 : 1;
+
                 mapMonsters = mapMonsters.filter(m => m !== mob);
 
-                // Checar Level Up
                 if (player.xp >= player.nextXp) {
-                    player.xp -= player.nextXp;
-                    player.lvl++;
-                    player.points += 4;
-                    player.maxHp += 15;
-                    player.hp = player.maxHp;
-                    player.nextXp = Math.floor(player.nextXp * 1.4);
-                    pushLog(`⭐ LEVEL UP! Você evoluiu para o Nível ${player.lvl}!`);
+                    player.xp -= player.nextXp; player.lvl++; player.points += 5; player.talentPoints += 1;
+                    player.maxHp += 15; player.hp = player.maxHp; player.nextXp = Math.floor(player.nextXp * 1.4);
+                    pushLog(`⭐ SUBIU DE NÍVEL! Nível ${player.lvl}!`);
                 }
-
-                if (mob.isBoss) {
-                    pushLog("🏆 CHEFE ABATIDO! A masmorra foi purificada!");
-                    currentMap[player.y][player.x] = '>';
-                }
-                drawCanvas();
-                return;
+                if (mob.isBoss) currentMap[player.y][player.x] = '>';
+                drawCanvas(); return;
             }
 
-            // Contra-ataque do Mob
-            let armorDef = weaponTiers[player.armorTier].def;
-            if (player.currentClass === "Paladino") armorDef += 10; // Passiva Paladino
+            // Contra-ataque
+            let trueDef = player.def + weaponTiers[player.armorTier].def;
+            let netDmg = Math.max(2, Math.floor(mob.atk - (trueDef * 0.4)));
+            player.hp -= netDmg;
+            pushLog(`💥 Tomou ${netDmg} de dano de revide.`);
 
-            let finalEnemyDmg = Math.floor(mob.atk - (armorDef * 0.5));
-            finalEnemyDmg = Math.max(2, finalEnemyDmg);
-
-            player.hp -= finalEnemyDmg;
-            pushLog(`💥 ${mob.name} revidou desferindo ${finalEnemyDmg} de dano.`);
-
-            if (player.hp <= 0) {
-                playerDeath();
-            }
+            if (player.hp <= 0) playerDeath();
             drawCanvas();
         }
 
-        function summonSkeletons() {
-            mapSummons = [];
-            let maxSummons = 1 + Math.floor(player.int / 12);
-            for (let i = 0; i < maxSummons; i++) {
-                mapSummons.push({ x: player.x, y: player.y });
+        // SISTEMA DE HABILIDADES ATIVAS DAS CLASSES
+        function useClassSkill() {
+            if (!dungeonState.active) { pushLog("❌ Ative uma masmorra para usar skills combativas."); return; }
+            classesData[player.currentClass].action();
+        }
+
+        function castStrikeDmg(multiplier, stat, mpCost) {
+            if (player.mp < mpCost) { pushLog("❌ Sem Mana Suficiente!"); return; }
+            let targets = mapMonsters.filter(m => Math.abs(m.x - player.x) + Math.abs(m.y - player.y) <= 2);
+            if (targets.length === 0) { pushLog("❌ Nenhum inimigo no alcance da skill."); return; }
+            
+            player.mp -= mpCost;
+            let skillDmg = Math.floor((weaponTiers[player.weaponTier].dmg + player[stat]) * multiplier);
+            targets[0].hp -= skillDmg;
+            pushLog(`💥 SKILL ATIVADA! Desferiu ${skillDmg} de dano real em ${targets[0].name}.`);
+            if (targets[0].hp <= 0) combatRound(targets[0]); // Reaproveita checagem de morte
+            drawCanvas();
+        }
+
+        function castHealSkill(pct, mpCost) {
+            if (player.mp < mpCost) { pushLog("❌ Sem Mana!"); return; }
+            player.mp -= mpCost;
+            let amt = Math.floor(player.maxHp * pct);
+            player.hp = Math.min(player.maxHp, player.hp + amt);
+            pushLog(`🔮 Luz Divina! Curou +${amt} de HP.`);
+            drawCanvas();
+        }
+
+        function castSummonSkill(mpCost) {
+            if (player.mp < mpCost) { pushLog("❌ Sem Mana!"); return; }
+            let maxS = 1;
+            let n2Node = talentTrees["Necromante"][1];
+            if (n2Node.allocation > 0) maxS += n2Node.allocation;
+
+            if (mapSummons.length >= maxS) { pushLog("❌ Limite de lacaios atingido!"); return; }
+            player.mp -= mpCost;
+            mapSummons.push({ x: player.x, y: player.y });
+            pushLog("💀 Um servo esqueleto ergueu-se do chão para defendê-lo.");
+            drawCanvas();
+        }
+
+        function allocateTalent(id) {
+            let tree = talentTrees[player.currentClass];
+            let node = tree.find(n => n.id === id);
+            if (player.talentPoints > 0 && node.allocation < node.max) {
+                player.talentPoints--;
+                node.allocation++;
+                node.apply();
+                pushLog(`📜 Alocou ponto em: ${node.name} (${node.allocation}/${node.max})`);
+                renderTalentTree();
+                renderUI();
             }
         }
 
         function playerDeath() {
-            player.hp = 0;
-            alert("💀 Você pereceu nas profundezas... Retornando salvo para a cidade.");
-            player.hp = Math.floor(player.maxHp * 0.4);
-            buildLobby();
+            alert("💀 Você desmaiou!"); player.hp = Math.floor(player.maxHp * 0.4); buildLobby();
         }
 
-        function changeClass(className) {
-            player.currentClass = className;
-            pushLog(`🛡️ Classe alterada para: ${className}!`);
-            if (className === "Necromante" && dungeonState.active) summonSkeletons();
-            else mapSummons = [];
-            drawCanvas();
+        function changeClass(c) {
+            player.currentClass = c; pushLog(`🎭 Classe redefinida para: ${c}`);
+            mapSummons = []; renderTalentTree(); drawCanvas();
         }
 
-        function buyStat(stat) {
-            if (player.points > 0) {
-                player.points--;
-                player[stat]++;
-                if(stat === 'str') player.maxHp += 8;
-                if(stat === 'int') player.maxMp += 6;
-                renderUI();
-            }
+        function buyStat(s) {
+            if (player.points > 0) { player.points--; player[s]++; if(s==='str') player.maxHp+=10; if(s==='int') player.maxMp+=8; renderUI(); }
+        }
+
+        function buyPotion() { if (player.gold >= 35) { player.gold -= 35; player.potions++; renderUI(); } }
+        
+        function consumePotionInCombat() {
+            if (player.potions > 0) { player.potions--; player.hp = player.maxHp; player.mp = player.maxMp; pushLog("🧪 Poção Completa Consumida!"); drawCanvas(); }
         }
 
         function startInstance(id) {
             let inst = instances.find(x => x.id === id);
-            if (player.lvl < inst.lvl) {
-                alert(`Bloqueado! Requer nível ${inst.lvl}`);
-                return;
-            }
-            dungeonState.active = true;
-            dungeonState.data = inst;
-            dungeonState.floor = 1;
-            buildDungeonFloor();
+            if (player.lvl < inst.lvl) { alert(`Bloqueado! Nível ${inst.lvl} necessário.`); return; }
+            dungeonState.active = true; dungeonState.data = inst; dungeonState.floor = 1; buildDungeonFloor();
         }
 
-        function buyPotion() {
-            if (player.gold >= 30) {
-                player.gold -= 30;
-                player.potions++;
-                renderUI();
-            }
-        }
-
-        function consumePotionInCombat() {
-            if (player.potions > 0) {
-                player.potions--;
-                player.hp = Math.min(player.maxHp, player.hp + Math.floor(player.maxHp * 0.5));
-                player.mp = Math.min(player.maxMp, player.maxMp + 20);
-                pushLog("🧪 Elixir Consumido! Vida e Mana recuperados.");
-                drawCanvas();
-            }
-        }
-
-        function craftGear(tierId, itemType) {
-            let t = weaponTiers[tierId];
+        function craftGear(id, type) {
+            let t = weaponTiers[id];
             if (player.materials[t.mat] >= t.qty) {
                 player.materials[t.mat] -= t.qty;
-                if(itemType === 'weapon') player.weaponTier = tierId;
-                else player.armorTier = tierId;
-                pushLog(`🔨 Manufaturado com sucesso: ${itemType === 'weapon' ? t.wName : t.aName}`);
+                if(type==='w') player.weaponTier = id; else player.armorTier = id;
                 renderUI();
             }
         }
 
-        function switchMmoTab(tabId) {
+        function switchMmoTab(id) {
             document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.mmo-tabs button').forEach(b => b.classList.remove('active'));
-            document.getElementById(`view-${tabId}`).style.display = 'block';
-            document.getElementById(`tab-${tabId}`).classList.add('active');
+            document.getElementById(`view-${id}`).style.display = 'block';
+            document.getElementById(`tab-${id}`).classList.add('active');
+            if(id === 'skills') renderTalentTree();
             renderUI();
         }
 
-        function pushLog(msg) {
-            const term = document.getElementById('terminal-logs');
-            term.innerHTML += `<p style='margin:2px 0;'>&gt; ${msg}</p>`;
-            term.scrollTop = term.scrollHeight;
+        function renderTalentTree() {
+            const box = document.getElementById('box-talents');
+            box.innerHTML = "";
+            document.getElementById('lbl-skill-desc').innerText = classesData[player.currentClass].desc;
+            talentTrees[player.currentClass].forEach(node => {
+                box.innerHTML += `<div class="talent-node">
+                    <div><b>${node.name}</b> (${node.allocation}/${node.max})<br><span style="font-size:10px; color:#c4bca3;">${node.desc}</span></div>
+                    <button class="action-btn" onclick="allocateTalent('${node.id}')" ${player.talentPoints > 0 && node.allocation < node.max ? '' : 'disabled'}>+</button>
+                </div>`;
+            });
         }
 
-        function cheatAdm(type) {
-            if(type === 'gold') player.gold += 5000;
-            if(type === 'mats') materialsList.forEach(m => player.materials[m] += 20);
-            if(type === 'lvl') { player.lvl += 5; player.points += 20; }
-            if(type === 'god') { player.hp = player.maxHp = 9999; player.mp = player.maxMp = 9999; }
-            pushLog("⚡ Comandos ADM injetados com sucesso.");
-            renderUI();
+        function pushLog(m) {
+            const t = document.getElementById('terminal-logs'); t.innerHTML += `<p style='margin:2px 0;'>&gt; ${m}</p>`; t.scrollTop = t.scrollHeight;
+        }
+
+        function cheatAdm(t) {
+            if(t==='gold') player.gold += 5000;
+            if(t==='mats') materialsList.forEach(m => player.materials[m] += 50);
+            if(t==='lvl') { player.lvl += 5; player.points += 25; }
+            if(t==='talents') player.talentPoints += 5;
+            renderUI(); if(document.getElementById('view-skills').style.display === 'block') renderTalentTree();
         }
 
         function renderPortals() {
-            const p = document.getElementById('portal-triggers');
-            p.innerHTML = "";
+            const container = document.getElementById('portal-triggers'); container.innerHTML = "";
             instances.forEach(i => {
-                p.innerHTML += `<button onclick="startInstance(${i.id})" style="background:#131326; border:1px solid #33c; text-align:left; padding:8px; color:white; font-size:11px;">
-                    🌌 Portal: <b>${i.name}</b> (Lvl ${i.lvl})<br>Drop: ${i.mat} | Chefe: ${i.boss}
+                container.innerHTML += `<button onclick="startInstance(${i.id})" style="background:#3d2c25; border:2px solid #110a08; color:#fff; text-align:left; padding:8px; width:100%; font-size:11px; margin-bottom:4px; cursor:pointer;">
+                    🌌 Masmorra: <b>${i.name}</b> (Requer Nível ${i.lvl})<br>Minério Alvo: ${i.mat}
                 </button>`;
             });
         }
@@ -616,56 +573,37 @@
             document.getElementById('lbl-gold').innerText = player.gold;
             document.getElementById('lbl-class').innerText = player.currentClass;
             document.getElementById('lbl-points').innerText = player.points;
+            document.getElementById('lbl-talent-points').innerText = player.talentPoints;
             document.getElementById('lbl-str').innerText = player.str;
-            document.getElementById('lbl-int').innerText = player.int;
             document.getElementById('lbl-agi').innerText = player.agi;
+            document.getElementById('lbl-mag').innerText = player.mag;
+            document.getElementById('lbl-int').innerText = player.int;
+            document.getElementById('lbl-luk').innerText = player.luk;
+            document.getElementById('lbl-def').innerText = player.def;
             document.getElementById('lbl-pot-count').innerText = player.potions;
-            
             document.getElementById('lbl-weapon').innerText = weaponTiers[player.weaponTier].wName;
             document.getElementById('lbl-armor').innerText = weaponTiers[player.armorTier].aName;
-            
-            let maxS = player.currentClass === "Necromante" ? (1 + Math.floor(player.int / 12)) : 0;
-            document.getElementById('lbl-summons').innerText = `${mapSummons.length} / ${maxS}`;
 
-            // Render de Barras
-            document.getElementById('fill-hp').style.width = `${(player.hp / player.maxHp) * 100}%`;
-            document.getElementById('txt-hp').innerText = `HP: ${player.hp} / ${player.maxHp}`;
-            document.getElementById('fill-mp').style.width = `${(player.mp / player.maxMp) * 100}%`;
-            document.getElementById('txt-mp').innerText = `MP: ${player.mp} / ${player.maxMp}`;
-            document.getElementById('fill-xp').style.width = `${(player.xp / player.nextXp) * 100}%`;
-            document.getElementById('txt-xp').innerText = `XP: ${player.xp} / ${player.nextXp}`;
+            document.getElementById('fill-hp').style.width = `${(player.hp/player.maxHp)*100}%`;
+            document.getElementById('txt-hp').innerText = `HP: ${player.hp}/${player.maxHp}`;
+            document.getElementById('fill-mp').style.width = `${(player.mp/player.maxMp)*100}%`;
+            document.getElementById('txt-mp').innerText = `MP: ${player.mp}/${player.maxMp}`;
+            document.getElementById('fill-xp').style.width = `${(player.xp/player.nextXp)*100}%`;
+            document.getElementById('txt-xp').innerText = `XP: ${player.xp}/${player.nextXp}`;
 
-            // Render de Inventário de Materiais
-            const box = document.getElementById('box-materials-grid');
-            box.innerHTML = "";
-            materialsList.forEach(m => {
-                box.innerHTML += `<div class="tag">📦 ${m}: <b>${player.materials[m]}</b></div>`;
-            });
+            const boxMat = document.getElementById('box-materials-grid'); boxMat.innerHTML = "";
+            materialsList.forEach(m => { boxMat.innerHTML += `<div class="tag">🧱 ${m}: <b>${player.materials[m]}</b></div>`; });
 
-            // Render da Forja
-            const f = document.getElementById('forge-list');
-            f.innerHTML = "";
-            for(let i = 1; i < weaponTiers.length; i++) {
-                let t = weaponTiers[i];
-                let canW = player.materials[t.mat] >= t.qty;
-                f.innerHTML += `<div class="flex-row">
-                    <span>⚔️ <b>${t.wName}</b> (Dmg: ${t.dmg})<br>Custo: ${t.qty}x ${t.mat}</span>
-                    <button class="action-btn" onclick="craftGear(${i}, 'weapon')" ${canW ? '' : 'disabled'}>Forjar Arma</button>
-                </div>
-                <div class="flex-row" style="margin-bottom:12px;">
-                    <span>🛡️ <b>${t.aName}</b> (Def: ${t.def})<br>Custo: ${t.qty}x ${t.mat}</span>
-                    <button class="action-btn" onclick="craftGear(${i}, 'armor')" ${canW ? '' : 'disabled'}>Forjar Capa</button>
-                </div>`;
+            const f = document.getElementById('forge-list'); f.innerHTML = "";
+            for(let i=1; i<weaponTiers.length; i++) {
+                let t = weaponTiers[i]; let can = player.materials[t.mat] >= t.qty;
+                f.innerHTML += `<div class="flex-row"><span>⚔️ <b>${t.wName}</b><br>Requer: ${t.qty}x ${t.mat}</span><button class="action-btn" onclick="craftGear(${i}, 'w')" ${can?'':'disabled'}>Forjar Arma</button></div>
+                                <div class="flex-row"><span>🛡️ <b>${t.aName}</b><br>Requer: ${t.qty}x ${t.mat}</span><button class="action-btn" onclick="craftGear(${i}, 'a')" ${can?'':'disabled'}>Forjar Capa</button></div>`;
             }
 
-            // Render de Venda das Lojas
-            const s = document.getElementById('shop-sell-list');
-            s.innerHTML = "";
-            instances.forEach(inst => {
-                s.innerHTML += `<div class="flex-row">
-                    <span>Vender 1x <b>${inst.mat}</b></span>
-                    <button onclick="player.materials['${inst.mat}']--; player.gold += ${inst.price}; renderUI();" ${player.materials[inst.mat] > 0 ? '' : 'disabled'} style="background:#22c; border:none; color:white; font-size:10px; padding:3px 6px; cursor:pointer;">💵 +${inst.price} Gold</button>
-                </div>`;
+            const s = document.getElementById('shop-sell-list'); s.innerHTML = "";
+            instances.forEach(ins => {
+                s.innerHTML += `<div class="flex-row"><span>Liquidar 1x <b>${ins.mat}</b></span><button onclick="player.materials['${ins.mat}']--; player.gold+=${ins.price}; renderUI();" ${player.materials[ins.mat]>0?'':'disabled'} style="background:#595c16; padding:4px; color:#fff; border:1px solid #000; font-size:10px; cursor:pointer;">💵 +${ins.price} Gold</button></div>`;
             });
         }
 
