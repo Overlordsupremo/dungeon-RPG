@@ -303,11 +303,19 @@
             canvas.height = canvas.parentElement.clientHeight;
         }
 
-        // ALTERNÂNCIA DE ABAS CORRIGIDA (Garante que o display mude de 'none' para 'block')
+        // SISTEMA RE-ESTRUTURADO: Agora as abas trocam sem nenhuma chance de travar!
         function switchMmoTab(id) {
-            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            // Esconde todas as views manualmente
+            document.getElementById('view-hero').style.display = 'none';
+            document.getElementById('view-skills').style.display = 'none';
+            document.getElementById('view-shop').style.display = 'none';
+            document.getElementById('view-world').style.display = 'none';
+            document.getElementById('view-adm').style.display = 'none';
+            
+            // Remove active dos botões
             document.querySelectorAll('.mmo-tabs button').forEach(b => b.classList.remove('active'));
             
+            // Ativa o alvo selecionado
             document.getElementById(`view-${id}`).style.display = 'block';
             document.getElementById(`tab-${id}`).classList.add('active');
             
