@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masmorra RPG: Alquimia do Aço</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: #0c0c10; color: #e0e0e6; margin: 0; padding: 20px; }
+        h1, h2, h3 { color: #ff3333; text-shadow: 2px 2px #000; margin-top: 0; }
+        
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .panel { background: #14141c; border: 3px solid #2a2a3a; padding: 15px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.7); }
+        
+        /* Botões */
+        button { background: #3a2a2a; color: #fff; border: 2px solid #5a4444; border-bottom-width: 5px; padding: 8px 12px; cursor: pointer; font-weight: bold; font-size: 12px; text-transform: uppercase; }
+        button:hover { background: #4a3535; }
+        button:active { border-bottom-width: 2px; margin-top: 3px; }
+        button:disabled { background: #222 !important; border-color: #333 !important; color: #555 !important; cursor: not-allowed; }
+
+        /* Barras de Vida e Progresso */
+        .bar-container { background: #222; width: 100%; height: 20px; border: 1px solid #444; margin: 5px 0; border-radius: 3px; overflow: hidden; position: relative; }
+        .bar-fill { height: 100%; transition: width 0.2s; }
+        .hp-bar { background: #cc2222; }
+        .xp-bar { background: #22cc22; }
+        .bar-text { position: absolute; width: 100%; text-align: center; font-size: 11px; font-weight: bold; line-height: 20px; color: #fff; text-shadow: 1px 1px #000; }
+
+        /* Estilos Internos */
+        .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .log-box { background: #08080c; border: 1px solid #222; height: 180px; overflow-y: auto; padding: 8px; font-size: 12px; color: #aaa; line-height: 1.5; }
+        .combat-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .material-tag { background: #223; padding: 2px 6px; border-radius: 3px; border: 1px solid #446; font-size: 11px; }
+        
+        .tab-buttons { display: flex; gap: 5px; margin-bottom: 15px; }
+        .tab-btn.active { background: #8b0000; border-color: #ff3333; }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center; color: #dd3333;">⚔️ DUNGEON CRAWLER: REINO DO CAOS ⚔️</h1>
+
+    <div class="grid-container">
+        
+        <div class="panel">
+            <div class="tab-buttons">
+                <button class="tab-btn active" id="btn-tab-status" onclick="switchTab('status')">👤 Status & Atributos</button>
+                <button class="tab-btn" id="btn-tab-craft" onclick="switchTab('craft')">🔨 Forja & Crafting</button>
+            </div>
+
+            <div id="tab-status">
+                <h3>Herói (Nível <span id="player-lvl">1</span>)</h3>
+                <div class="bar-container">
+                    <div id="player-hp-fill" class="bar-fill hp-bar" style="width: 100%;"></div>
+                    <div id="player-hp-text" class="bar-text">HP: 100 / 100</div>
+                </div>
+                <div class="bar-container">
+                    <div id="player-xp-fill" class="bar-fill xp-bar" style="width: 0%;"></div>
+                    <div id="player-xp-text" class="bar-text">XP: 0 / 100</div>
+                </div>
+
+                <p style="color: #ffcc00; font-weight: bold;">Pontos Disponíveis: <span id="attr-points">0</span></p>
+                <div class="flex-between"><span>💪 Força (Dano): <b id="attr-str">10</b></span> <button onclick="upAttribute('str')" class="btn-add">+</button></div>
+                <div class="flex-between"><span>⚡ Destreza (Crítico/Esquiva): <b id="attr-dex">10</b></span> <button onclick="upAttribute('dex')" class="btn-add">+</button></div>
+                <div class="flex-between"><span>🩸 Vitalidade (Vida Máxima): <b id="attr-vit">10</b></span> <button onclick="upAttribute('vit')" class="btn-add">+</button></div>
+
+                <hr style="border-color: #2a2a3a; margin: 15px 0;">
+                <h3>Equipamento Atual</h3>
+                <p>⚔️ Arma: <b id="eq-weapon" style="color: #00ffcc;">Espada de Madeira</b></p>
+                <p>🛡️ Armadura: <b id="eq-armor" style="color: #00ffcc;">Trapo Antigo</b></p>
+                
+                <hr style="border-color: #2a2a3a; margin: 15px 0;">
+                <h3>Bolsa de Materiais</h3>
+                <div id="inventory-materials" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;"></div>
+            </div>
+
+            <div id="tab-craft" style="display: none;">
+                <h3>🔨 Estação de Forja</h3>
+                <p style="font-size: 11px; color: #888;">Colete minérios nas masmorras para evoluir seus equipamentos sequencialmente.</p>
+                
+                <h4>Melhorar Arma</h4>
+                <div id="craft-weapon-box" class="flex-between" style="background: #1c1c24; padding: 10px; border-radius: 4px;"></div>
+
+                <h4>Melhorar Armadura</h4>
+                <div id="craft-armor-box" class="flex-between" style="background: #1c1c24; padding: 10px; border-radius: 4px; margin-top: 10px;"></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>🗺️ Seleção de Masmorras</h3>
+            <div class="flex-between">
+                <select id="select-dungeon" onchange="changeDungeon()" style="background: #222; color: #fff; padding: 6px; font-family: inherit; width: 70%; border: 1px solid #444;"></select>
+                <button id="btn-enter-dungeon" onclick="enterDungeon()">Explorar</button>
+            </div>
+            <p id="dungeon-req-info" style="font-size: 11px; color: #ff3333; margin: 4px 0 15px 0;"></p>
+
+            <div id="combat-zone" style="display: none; border-top: 2px dashed #333; padding-top: 15px;">
+                <div class="flex-between">
+                    <h3 id="dungeon-title" style="color: #ffcc00; margin: 0;">Masmorra I</h3>
+                    <span style="font-weight: bold; color: #fff;">Andar: <span id="ui-floor">1</span>/25</span>
+                </div>
+
+                <div style="background: #1c1c24; border: 1px solid #334; padding: 10px; margin: 10px 0; border-radius: 4px; text-align: center;">
+                    <h4 id="mob-name" style="margin: 0 0 5px 0; color: #ff5555;">Nome do Monstro</h4>
+                    <div class="bar-container">
+                        <div id="mob-hp-fill" class="bar-fill hp-bar" style="width: 100%;"></div>
+                        <div id="mob-hp-text" class="bar-text">HP: 0 / 0</div>
+                    </div>
+                    <p id="mob-mechanic" style="font-size: 11px; color: #ffaa00; margin: 4px 0 0 0;">Mecânica: Nenhuma</p>
+                </div>
+
+                <div class="log-box" id="combat-log"></div>
+
+                <div class="combat-actions">
+                    <button onclick="playerAction('attack')" style="background: #8b0000;">⚔️ Atacar</button>
+                    <button onclick="playerAction('heal')" style="background: #226622; border-color: #338833;">🧪 Tomar Poção</button>
+                    <button onclick="fleeDungeon()" style="background: #444; border-color: #666; grid-column: span 2;">🏳️ Fugir da Masmorra</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES DO JOGO
+        const dungeonsConfig = [
+            { id: 1, name: "1. Caverna dos Ratos", minLvl: 1, mat: "Cobre" },
+            { id: 2, name: "2. Minas Esquecidas", minLvl: 5, mat: "Ferro" },
+            { id: 3, name: "3. Catacumbas Sombrias", minLvl: 10, mat: "Aço" },
+            { id: 4, name: "4. Ninho dos Dragões", minLvl: 18, mat: "Mithril" },
+            { id: 5, name: "5. Ruínas de Plasma", minLvl: 26, mat: "Titanio" },
+            { id: 6, name: "6. Labirinto Celestial", minLvl: 35, mat: "Cosmio" },
+            { id: 7, name: "7. Cripta Ancestral", minLvl: 45, mat: "Divino" },
+            { id: 8, name: "8. Vazio Corrompido", minLvl: 55, mat: "Divino" },
+            { id: 9, name: "9. Inferno de Sangue", minLvl: 68, mat: "Divino" },
+            { id: 10, name: "10. Núcleo do Infinito", minLvl: 80, mat: "Divino" }
+        ];
+
+        const tiersConfig = [
+            { id: 0, wName: "Espada de Madeira", aName: "Trapo Antigo", dmg: 5, def: 0, matNeeded: null, qty: 0 },
+            { id: 1, wName: "Adaga de Cobre", aName: "Armadura de Couro", dmg: 12, def: 3, matNeeded: "Cobre", qty: 5 },
+            { id: 2, wName: "Machado de Ferro", aName: "Cota de Malha", dmg: 26, def: 8, matNeeded: "Ferro", qty: 8 },
+            { id: 3, wName: "Montante de Aço", aName: "Armadura de Placas", dmg: 50, def: 15, matNeeded: "Aço", qty: 12 },
+            { id: 4, wName: "Lança de Mithril", aName: "Gárgula Runica", dmg: 95, def: 28, matNeeded: "Mithril", qty: 15 },
+            { id: 5, wName: "Glaive de Titânio", aName: "Manto de Plasma", dmg: 180, def: 50, matNeeded: "Titanio", qty: 20 },
+            { id: 6, wName: "Katana de Cósmio", aName: "Égide Celestial", dmg: 340, def: 90, matNeeded: "Cosmio", qty: 25 },
+            { id: 7, wName: "Espada Divina", aName: "Armadura do Infinito", dmg: 650, def: 160, matNeeded: "Divino", qty: 35 }
+        ];
+
+        const mobsConfig = [
+            { name: "Rato Mutante", mech: "Ataques Rápidos (+10% chance crítico)", action: (m, p) => { if(Math.random() < 0.1) m.atk *= 1.5; } },
+            { name: "Zumbi Putrefato", mech: "Casca Grossa (Bloqueia 2 de dano fixo)", action: (m, p) => {} },
+            { name: "Aranha Sombria", mech: "Veneno Gotejante (Dano extra fixo por turno)", action: (m, p) => { player.hp -= 3; log(`O veneno da Aranha tirou 3 de HP do jogador.`); } },
+            { name: "Esqueleto Guerreiro", mech: "Contra-Ataque (Chance de revidar ao ser atacado)", action: (m, p) => {} },
+            { name: "Morcego Vampirico", mech: "Drenagem de Sangue (Cura 15% do dano causado)", action: (m, p) => { let heal = Math.floor(m.atk * 0.15); m.hp = Math.min(m.maxHp, m.hp + heal); } },
+            { name: "Golem de Pedra", mech: "Armadura Protetora (Reduz dano físico recebido)", action: (m, p) => {} },
+            { name: "Cultista do Caos", mech: "Alquimia Sombria (Chance de se curar no turno)", action: (m, p) => { if(Math.random() < 0.2) { m.hp = Math.min(m.maxHp, m.hp + 20); log("O Cultista usou Alquimia e curou 20 HP."); } } },
+            { name: "Aparição do Vazio", mech: "Evasivo (15% de chance de desviar do golpe)", action: (m, p) => {} },
+            { name: "Demônio de Fogo", mech: "Combustão (Aumenta o próprio ataque a cada turno)", action: (m, p) => { m.atk += 2; } },
+            { name: "Espectro do Tempo", mech: "Distorção (Reduz a destreza do jogador no turno)", action: (m, p) => {} }
+        ];
+
+        const bossesConfig = [
+            { name: "👑 Rei Rato", mech: "Frenesi Final (Dano dobra abaixo de 30% HP)" },
+            { name: "👑 Executor de Ferro", mech: "Golpe Esmagador (Ignora 20% da armadura do jogador)" },
+            { name: "👑 Necromante Lich", mech: "Barreira Mística (Absorve os primeiros 50 de dano recebidos)" },
+            { name: "👑 Dragão Ancião de Sangue", mech: "Sopro Purificador (Limpa buffs e queima o jogador)" },
+            { name: "👑 General de Plasma", mech: "Sobrecarga (Ataque em área massivo a cada 3 turnos)" },
+            { name: "👑 Guardião Cósmico", mech: "Inversão Gravitacional (Reflete 10% do dano físico)" },
+            { name: "👑 Avatar Ancestral", mech: "Cura Divina (Recupera 100 de HP se não for atacado criticamente)" },
+            { name: "👑 Senhor do Vazio", mech: "Desintegração (Diminui permanentemente a defesa na luta)" },
+            { name: "👑 Behemoth Infernal", mech: "Ira Vulcânica (Causa dano crítico inevitável no 1º turno)" },
+            { name: "👑 Juiz do Infinito", mech: "Julgamento Final (Mecânicas combinadas de todos os anteriores)" }
+        ];
+
+        // ESTADO DO JOGADOR
+        let player = {
+            lvl: 1, xp: 0, nextXp: 100,
+            hp: 100, maxHp: 100,
+            str: 10, dex: 10, vit: 10,
+            points: 0,
+            weaponTier: 0, armorTier: 0,
+            materials: { Cobre: 0, Ferro: 0, Aço: 0, Mithril: 0, Titanio: 0, Cosmio: 0, Divino: 0 }
+        };
+
+        // ESTADO DA DUNGEON ATUAL
+        let currentDungeon = null;
+        let currentFloor = 1;
+        let currentMob = null;
+        let inCombat = false;
+
+        function init() {
+            buildDungeonSelect();
+            updateUI();
+            updateCrafting();
+        }
+
+        function buildDungeonSelect() {
+            const select = document.getElementById('select-dungeon');
+            select.innerHTML = '';
+            dungeonsConfig.forEach(d => {
+                let opt = document.createElement('option');
+                opt.value = d.id;
+                opt.innerText = `${d.name} (Lvl Min: ${d.minLvl})`;
+                select.appendChild(opt);
+            });
+            changeDungeon();
+        }
+
+        function changeDungeon() {
+            let id = document.getElementById('select-dungeon').value;
+            let d = dungeonsConfig.find(x => x.id == id);
+            currentDungeon = d;
+            document.getElementById('dungeon-req-info').innerText = `Requisito: Nível ${d.minLvl}. Drops de minério: ${d.mat}`;
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tab-status').style.display = tab === 'status' ? 'block' : 'none';
+            document.getElementById('tab-craft').style.display = tab === 'craft' ? 'block' : 'none';
+            document.getElementById('btn-tab-status').classList.toggle('active', tab === 'status');
+            document.getElementById('btn-tab-craft').classList.toggle('active', tab === 'craft');
+        }
+
+        function upAttribute(attr) {
+            if (player.points > 0) {
+                player.points--;
+                player[attr]++;
+                if (attr === 'vit') {
+                    let oldMax = player.maxHp;
+                    player.maxHp = player.vit * 10;
+                    player.hp += (player.maxHp - oldMax);
+                }
+                updateUI();
+            }
+        }
+
+        function enterDungeon() {
+            if (player.lvl < currentDungeon.minLvl) {
+                alert(`Você precisa ter nível ${currentDungeon.minLvl} para entrar nesta masmorra.`);
+                return;
+            }
+            currentFloor = 1;
+            inCombat = true;
+            document.getElementById('combat-zone').style.display = 'block';
+            document.getElementById('dungeon-title').innerText = currentDungeon.name.substring(3);
+            document.getElementById('combat-log').innerHTML = "<p style='color: #00ff00;'>Você entrou na masmorra! Prepare-se para lutar.</p>";
+            spawnMonster();
+        }
+
+        function spawnMonster() {
+            let isBoss = (currentFloor === 25);
+            let lvlMod = currentDungeon.id * 3 + currentFloor;
+
+            if (!isBoss) {
+                // Sorteia um mob comum dos 10 disponíveis
+                let baseMob = mobsConfig[Math.floor(Math.random() * mobsConfig.length)];
+                currentMob = {
+                    name: baseMob.name,
+                    hp: 30 + (lvlMod * 8),
+                    maxHp: 30 + (lvlMod * 8),
+                    atk: 4 + (lvlMod * 1.5),
+                    mech: baseMob.mech,
+                    isBoss: false,
+                    action: baseMob.action
+                };
+            } else {
+                // Pega o boss específico baseado no ID da masmorra (1 a 10)
+                let baseBoss = bossesConfig[currentDungeon.id - 1];
+                currentMob = {
+                    name: baseBoss.name,
+                    hp: 200 + (lvlMod * 25),
+                    maxHp: 200 + (lvlMod * 25),
+                    atk: 15 + (lvlMod * 3),
+                    mech: baseBoss.mech,
+                    isBoss: true,
+                    action: (m, p) => {
+                        // Mecânica customizada de boss
+                        if(currentDungeon.id === 1 && m.hp < m.maxHp * 0.3) { m.atk *= 2; } 
+                    }
+                };
+                log(`<span style='color: #ff3333; font-weight:bold;'>⚠️ O CHEFE DA MASMORRA APARECEU: ${currentMob.name}!</span>`);
+            }
+
+            updateUI();
+        }
+
+        function playerAction(type) {
+            if (!inCombat || player.hp <= 0) return;
+
+            if (type === 'attack') {
+                // Mecânica de esquiva do mob Aparição do Vazio
+                if (currentMob.name === "Aparição do Vazio" && Math.random() < 0.15) {
+                    log(`💨 A Aparição do Vazio desviou do seu ataque fluidamente!`);
+                } else {
+                    let danoBase = tiersConfig[player.weaponTier].dmg + Math.floor(player.str * 0.8);
+                    let chanceCrit = Math.min(0.05 + (player.dex * 0.01), 0.50);
+                    let isCrit = Math.random() < chanceCrit;
+
+                    if (isCrit) danoBase = Math.floor(danoBase * 1.8);
+
+                    // Redução do Golem
+                    if (currentMob.name === "Golem de Pedra") { danoBase = Math.max(1, danoBase - 6); }
+                    if (currentMob.name === "Zumbi Putrefato") { danoBase = Math.max(1, danoBase - 2); }
+
+                    currentMob.hp -= danoBase;
+                    log(`⚔️ Você causou <b>${danoBase}</b> dano no ${currentMob.name}${isCrit ? ' (CRÍTICO!)' : ''}.`);
+                }
+            } else if (type === 'heal') {
+                let cura = Math.floor(player.maxHp * 0.35);
+                player.hp = Math.min(player.maxHp, player.hp + cura);
+                log(`🧪 Você tomou uma Poção de Cura e recuperou <b>${cura}</b> de HP.`);
+            }
+
+            // Checar se o monstro morreu
+            if (currentMob.hp <= 0) {
+                enemyDefeated();
+                return;
+            }
+
+            // Turno do Inimigo
+            enemyTurn();
+        }
+
+        function enemyTurn() {
+            // Executa a inteligência/passiva do monstro
+            currentMob.action(currentMob, player);
+
+            let danoInimigo = Math.floor(currentMob.atk - (tiersConfig[player.armorTier].def * 0.5));
+            if(currentMob.name.includes("Executor") && Math.random() < 0.5) {
+                danoInimigo = Math.floor(currentMob.atk - (tiersConfig[player.armorTier].def * 0.4)); // ignora parte da def
+            }
+            danoInimigo = Math.max(1, danoInimigo);
+
+            player.hp -= danoInimigo;
+            log(`💥 ${currentMob.name} atacou você causando <b>${danoInimigo}</b> de dano.`);
+
+            if (player.hp <= 0) {
+                player.hp = 0;
+                log(`<span style='color: #ff0000; font-weight:bold;'>💀 Você sucumbiu no andar ${currentFloor} e foi resgatado de volta à cidade...</span>`);
+                inCombat = false;
+                document.getElementById('combat-zone').style.display = 'none';
+                player.hp = Math.floor(player.maxHp * 0.2); // Acorda com pouca vida
+            }
+
+            updateUI();
+        }
+
+        function enemyDefeated() {
+            log(`<span style='color: #22cc22;'>✨ ${currentMob.name} foi pulverizado!</span>`);
+            
+            // Recompensas
+            let xpGanho = currentMob.isBoss ? (currentDungeon.id * 80) : (currentDungeon.id * 10 + currentFloor);
+            gainXp(xpGanho);
+
+            // Drop de materiais garantido
+            let qtdMat = currentMob.isBoss ? 5 : 1;
+            player.materials[currentDungeon.mat] += qtdMat;
+            log(`💎 Você coletou <b>+${qtdMat}x ${currentDungeon.mat}</b>.`);
+
+            if (currentFloor === 25) {
+                log(`<span style='color: #ffcc00; font-weight:bold;'>🎉 PARABÉNS! Você limpou completamente a Masmorra ${currentDungeon.id}!</span>`);
+                inCombat = false;
+                document.getElementById('combat-zone').style.display = 'none';
+            } else {
+                currentFloor++;
+                spawnMonster();
+            }
+            updateUI();
+        }
+
+        function gainXp(amt) {
+            player.xp += amt;
+            log(`✨ Ganhou ${amt} de experiência.`);
+            while (player.xp >= player.nextXp) {
+                player.xp -= player.nextXp;
+                player.lvl++;
+                player.points += 3;
+                player.nextXp = Math.floor(player.nextXp * 1.3);
+                log(`<span style='color: #00ffff; font-weight:bold;'>⭐ LEVEL UP! Você alcançou o Nível ${player.lvl}! +3 Pontos de Atributo.</span>`);
+            }
+        }
+
+        function fleeDungeon() {
+            inCombat = false;
+            document.getElementById('combat-zone').style.display = 'none';
+            log("🏃 Você recuou estrategicamente da masmorra.");
+            updateUI();
+        }
+
+        function log(msg) {
+            const box = document.getElementById('combat-log');
+            box.innerHTML += `<p style="margin:4px 0;">${msg}</p>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function upgradeItem(type) {
+            if (type === 'weapon') {
+                let nxt = tiersConfig[player.weaponTier + 1];
+                if (nxt && player.materials[nxt.matNeeded] >= nxt.qty) {
+                    player.materials[nxt.matNeeded] -= nxt.qty;
+                    player.weaponTier++;
+                    log(`🔨 Forjou com sucesso: ${nxt.wName}!`);
+                }
+            } else {
+                let nxt = tiersConfig[player.armorTier + 1];
+                if (nxt && player.materials[nxt.matNeeded] >= nxt.qty) {
+                    player.materials[nxt.matNeeded] -= nxt.qty;
+                    player.armorTier++;
+                    log(`🔨 Forjou com sucesso: ${nxt.aName}!`);
+                }
+            }
+            updateUI();
+            updateCrafting();
+        }
+
+        function updateCrafting() {
+            const wBox = document.getElementById('craft-weapon-box');
+            const aBox = document.getElementById('craft-armor-box');
+
+            let nxtW = tiersConfig[player.weaponTier + 1];
+            if (nxtW) {
+                wBox.innerHTML = `<span>➡️ <b>${nxtW.wName}</b> (Dano: ${nxtW.dmg})<br>Custo: <b style="color:#ff5555;">${nxtW.qty}x ${nxtW.matNeeded}</b></span>
+                    <button onclick="upgradeItem('weapon')" ${player.materials[nxtW.matNeeded] >= nxtW.qty ? '' : 'disabled'}>Evoluir</button>`;
+            } else wBox.innerHTML = `<span>⭐ <b>Arma no Nível Máximo Divino!</b></span>`;
+
+            let nxtA = tiersConfig[player.armorTier + 1];
+            if (nxtA) {
+                aBox.innerHTML = `<span>➡️ <b>${nxtA.aName}</b> (Defesa: ${nxtA.def})<br>Custo: <b style="color:#ff5555;">${nxtA.qty}x ${nxtA.matNeeded}</b></span>
+                    <button onclick="upgradeItem('armor')" ${player.materials[nxtA.matNeeded] >= nxtA.qty ? '' : 'disabled'}>Evoluir</button>`;
+            } else aBox.innerHTML = `<span>⭐ <b>Armadura no Nível Máximo Divino!</b></span>`;
+        }
+
+        function updateUI() {
+            // Player UI
+            document.getElementById('player-lvl').innerText = player.lvl;
+            document.getElementById('attr-points').innerText = player.points;
+            document.getElementById('attr-str').innerText = player.str;
+            document.getElementById('attr-dex').innerText = player.dex;
+            document.getElementById('attr-vit').innerText = player.vit;
+            
+            document.getElementById('eq-weapon').innerText = tiersConfig[player.weaponTier].wName;
+            document.getElementById('eq-armor').innerText = tiersConfig[player.armorTier].aName;
+
+            // Barras jogador
+            let hpPct = Math.max(0, (player.hp / player.maxHp) * 100);
+            document.getElementById('player-hp-fill').style.width = `${hpPct}%`;
+            document.getElementById('player-hp-text').innerText = `HP: ${player.hp} / ${player.maxHp}`;
+
+            let xpPct = Math.max(0, (player.xp / player.nextXp) * 100);
+            document.getElementById('player-xp-fill').style.width = `${xpPct}%`;
+            document.getElementById('player-xp-text').innerText = `XP: ${player.xp} / ${player.nextXp}`;
+
+            // Inventário visual de materiais
+            const invBox = document.getElementById('inventory-materials');
+            invBox.innerHTML = '';
+            Object.keys(player.materials).forEach(m => {
+                invBox.innerHTML += `<div class="material-tag">🪵 ${m}: <b>${player.materials[m]}</b></div>`;
+            });
+
+            // Combat UI
+            if (inCombat && currentMob) {
+                document.getElementById('ui-floor').innerText = currentFloor;
+                document.getElementById('mob-name').innerText = currentMob.name;
+                document.getElementById('mob-mechanic').innerText = `Mecânica: ${currentMob.mech}`;
+                
+                let mHpPct = Math.max(0, (currentMob.hp / currentMob.maxHp) * 100);
+                document.getElementById('mob-hp-fill').style.width = `${mHpPct}%`;
+                document.getElementById('mob-hp-text').innerText = `HP: ${currentMob.hp} / ${currentMob.maxHp}`;
+            }
+            updateCrafting();
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
