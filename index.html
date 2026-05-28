@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro MMORPG: God-Tier Admin & Hardcore Evolution</title>
+    <title>Retro MMORPG: Absolute Engine Update</title>
     <style>
         * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; image-rendering: pixelated; }
         body { background-color: #0f0a09; color: #fdf6e2; margin: 0; padding: 10px; user-select: none; }
@@ -62,7 +62,7 @@
 </head>
 <body>
 
-    <h1>⚔️ OMNI MMORPG: EXECUTIONER DEV EDITION ⚔️</h1>
+    <h1>⚔️ OMNI MMORPG: ABSOLUTE COMBAT ENGINE ⚔️</h1>
 
     <div class="grid-layout">
         
@@ -235,7 +235,7 @@
             { name: "Poção Perfeita Grande MP", cost: 200, restore: 350, type: "MP" }
         ];
 
-        // 5 HABILIDADES UNITÁRIAS COERENTES POR CLASSE
+        // ENGINE ENGINE INTEGRADO DE SKILLS TIPO DEBUFF, CURA, BUFF E INVOCAÇÃO ATIVOS NO MOTOR
         const classSkillsData = {
             "Guerreiro": [
                 { name: "Golpe Impetuoso", stages: ["Corte Rápido ⚔️", "Ataque Pesado ⚔️", "Fenda Brutal ⚔️", "Ruína Terrestre ⚔️", "Corte Divino do Caos ⚔️"], cost: 10, dmgMult: 1.6, type: "melee" },
@@ -255,7 +255,7 @@
                 { name: "Tiro Preciso", stages: ["Tiro Simples 🏹", "Flecha Veloz 🏹", "Disparo Sônico 🏹", "Perfurador de Almas 🏹", "Flecha Artemis do Infinito 🏹"], cost: 12, dmgMult: 1.6, type: "projectile", projType: "arrow" },
                 { name: "Chuva de Flechas", stages: ["Rajada", "Chuva de Aço", "Salva Mortífera", "Disparo Divino", "Chuva de Meteoros de Setas 🌧️"], cost: 35, dmgMult: 3.2, type: "aoe" },
                 { name: "Agilidade Felina", stages: ["Alerta", "Passo Rápido", "Instinto Esquiva", "Velocidade Sônica", "Velocidade da Luz Divina ⚡"], cost: 15, isBuff: true, stat: "agi", amount: 16 },
-                { name: "Flecha Peçonhenta", stages: ["Flecha Suja", "Toxina Fluida", "Nuvem de Ácido", "Peste Corrosiva", "Infecção Letal Suprema ☣️"], cost: 25, dmgMult: 2.8, type: "projectile", projType: "poison" },
+                { name: "Flecha Peçonhenta", stages: ["Flecha Suja 🤢", "Toxina Fluida 🧪", "Nuvem de Ácido ☣️", "Peste Corrosiva 🦠", "Infecção Letal Suprema 💀"], cost: 25, dmgMult: 0.8, type: "projectile", projType: "poison", appliesDebuff: "veneno", debuffDmg: 15, debuffDuration: 5 },
                 { name: "Disparo Concentrado", stages: ["Mira", "Foco Total", "Tiro de Elite", "Destruidor de Barreiras", "Flecha Perfuradora de Planetas 🌌"], cost: 50, dmgMult: 5.0, type: "projectile", projType: "arrow" }
             ],
             "Paladino": [
@@ -268,7 +268,7 @@
             "Necromante": [
                 { name: "Evocação Superior", stages: ["Invocar Esqueleto Mofado 💀", "Invocar Morto-Vivo Pestilento 🧟", "Invocar Ogro Zumbi Titânico 👹", "Invocar Dragoniano das Trevas 🦎", "Invocar Dragão Morto-Vivo Lendário 🐉"], cost: 35, isSummon: true },
                 { name: "Sifão de Vida", stages: ["Toque Podre", "Suga Sangue", "Dreno Vital", "Névoa Sombria", "Colheita Abissal das Almas 🧛"], cost: 25, dmgMult: 2.4, type: "melee" },
-                { name: "Maldição Profana", stages: ["Enfraquecer", "Praga de Insetos", "Olhar Cadavérico", "Névoa de Decomposição", "Ruína Absoluta Profana 🤮"], cost: 20, dmgMult: 2.2, type: "aoe" },
+                { name: "Maldição Profana", stages: ["Enfraquecer 🤢", "Praga de Insetos 🪰", "Olhar Cadavérico 👀", "Névoa de Decomposição 🌫️", "Ruína Absoluta Profana 🤮"], cost: 20, dmgMult: 0.6, type: "aoe", appliesDebuff: "maldicao", debuffDmg: 20, debuffDuration: 6 },
                 { name: "Pacto Negro", stages: ["Sacrifício", "Troca Vital", "Pacto Sombrio", "Comunhão da Morte", "Soberania Espiritual 💀"], cost: 10, isHeal: true, amount: 60 },
                 { name: "Explosão de Cadáveres", stages: ["Estouro", "Estilhaços Ósseos", "Erupção Macabra", "Praga de Sangue", "Ragnarok dos Mortos Abissal 💥"], cost: 70, dmgMult: 6.0, type: "aoe" }
             ],
@@ -276,7 +276,7 @@
                 { name: "Apunhalada Fatal", stages: ["Fisgada", "Apunhalar", "Lâmina Oculta", "Golpe Cirúrgico", "Execução Perfeita das Sombras 🗡️"], cost: 12, dmgMult: 2.2, type: "melee" },
                 { name: "Camuflagem Oculta", stages: ["Passo Furtivo", "Agilidade Brutal", "Forma Sombria", "Instinto Predatório", "Sombra Fantasmagórica Onipresente 👥"], cost: 20, isBuff: true, stat: "agi", amount: 22 },
                 { name: "Dança das Lâminas", stages: ["Cortes Duplos", "Ataque Furioso", "Leque de Adagas", "Retalhar Tendões", "Turbilhão Sangrento de Shurikens 🌪️"], cost: 45, dmgMult: 4.0, type: "aoe" },
-                { name: "Lâmina Peçonhenta", stages: ["Veneno Leve", "Toxina Paralisante", "Peçonha Destrutiva", "Ácido Corrosivo", "Cutilada Viúva Negra Fatal 🦂"], cost: 28, dmgMult: 3.0, type: "melee" },
+                { name: "Lâmina Peçonhenta", stages: ["Veneno Leve ☣️", "Toxina Paralisante 🧪", "Peçonha Destrutiva 🦠", "Ácido Corrosivo 🩸", "Cutilada Viúva Negra Fatal 🦂"], cost: 28, dmgMult: 1.0, type: "melee", appliesDebuff: "veneno", debuffDmg: 25, debuffDuration: 4 },
                 { name: "Ataque Crítico Fatal", stages: ["Emboscada", "Corte Invisível", "Ataque no Ponto Fraco", "Perfuração de Coração", "Corte Decapitador Instantâneo 🥷"], cost: 60, dmgMult: 6.5, type: "melee" }
             ],
             "Administrador": [
@@ -310,11 +310,12 @@
 
         let classSkillPoints = { "Guerreiro": 0, "Mago": 0, "Arqueiro": 0, "Paladino": 0, "Necromante": 0, "Assassino": 0, "Administrador": 0 };
         let skillLevels = {}; Object.keys(classSkillsData).forEach(c => { skillLevels[c] = [0, 0, 0, 0, 0]; });
-        let equippedHotbar = [0, 1, 2]; // Guarda o index da skill associada às teclas 1, 2 e 3
+        let equippedHotbar = [0, 1, 2];
 
         let currentInvSubtab = "equip"; let keys = {}; let canvas, ctx;
         let mapMonsters = []; let visualEffects = []; let projectiles = []; let activeSummons = [];
         let dungeonState = { active: false, data: null, floor: 0 }; let exitPortal = null;
+        let lastDebuffTick = 0;
 
         function initGame() {
             canvas = document.getElementById('gameCanvas'); ctx = canvas.getContext('2d');
@@ -397,7 +398,8 @@
                         id: Math.random(),
                         x: 180 + Math.random() * (canvas.width - 280), y: 40 + Math.random() * (canvas.height - 80),
                         radius: 11, name: `Inimigo Fv.${fl}`, emoji: inst.mobEmoji,
-                        hp: hpScale, maxHp: hpScale, atk: atkScale, exp: (20 + fl * 6) * inst.difficulty, isBoss: false, agroTarget: null
+                        hp: hpScale, maxHp: hpScale, atk: atkScale, exp: (20 + fl * 6) * inst.difficulty, isBoss: false, agroTarget: null,
+                        activeDebuffs: []
                     });
                 }
             } else {
@@ -406,7 +408,8 @@
                 mapMonsters.push({
                     id: Math.random(),
                     x: canvas.width - 120, y: canvas.height / 2, radius: 24, name: inst.boss, emoji: "👑",
-                    hp: bHp, maxHp: bHp, atk: bAtk, exp: 500 * inst.difficulty, isBoss: true, lastSpecialAtk: 0, agroTarget: null
+                    hp: bHp, maxHp: bHp, atk: bAtk, exp: 500 * inst.difficulty, isBoss: true, lastSpecialAtk: 0, agroTarget: null,
+                    activeDebuffs: []
                 });
             }
             pushLog(`⚔️ Entrou no Andar ${fl} da Dungeon: ${inst.name}`);
@@ -426,6 +429,30 @@
                 player.y = Math.max(player.radius, Math.min(canvas.height - player.radius, player.y));
             }
 
+            // ATUALIZAÇÃO E PROCESSAMENTO DOS DEBUFFS ATIVOS (VENENO / MALDICAO)
+            let currentTimestamp = Date.now();
+            if (currentTimestamp - lastDebuffTick >= 1000) {
+                lastDebuffTick = currentTimestamp;
+                mapMonsters.forEach(mob => {
+                    mob.activeDebuffs.forEach(debuff => {
+                        if (debuff.duration > 0) {
+                            mob.hp -= debuff.dmgPerSecond;
+                            debuff.duration--;
+                            
+                            let color = debuff.type === "veneno" ? "#34c759" : "#a645ff";
+                            let icon = debuff.type === "veneno" ? "🤢" : "🔮";
+                            visualEffects.push({ x: mob.x + (Math.random()*16-8), y: mob.y - 15, text: `${icon} ${debuff.dmgPerSecond}`, color: color, life: 25 });
+                        }
+                    });
+                    // Remove debuffs expirados
+                    mob.activeDebuffs = mob.activeDebuffs.filter(d => d.duration > 0);
+                });
+                
+                // Mobs mortos por veneno/debuffs limpos pós-tick
+                mapMonsters.forEach(mob => { if(mob.hp <= 0) handleMobDeath(mob); });
+                mapMonsters = mapMonsters.filter(m => m.hp > 0);
+            }
+
             // INTELIGÊNCIA ARTIFICIAL: LACAIOS PROCURAM ALVO MAIS PRÓXIMO E ATACAM
             activeSummons.forEach(sum => {
                 if (mapMonsters.length > 0) {
@@ -443,7 +470,6 @@
                         if (minDist < 35 && (!sum.lastAtk || now - sum.lastAtk > 900)) {
                             sum.lastAtk = now; closestMob.hp -= sum.dmg;
                             visualEffects.push({ x: closestMob.x, y: closestMob.y - 12, text: `💀 ${sum.dmg}`, color: "#a645ff", life: 18 });
-                            // Inimigo foca no lacaio que o atacou (Retaliação)
                             if (Math.random() < 0.7) closestMob.agroTarget = sum;
                             if (closestMob.hp <= 0) handleMobDeath(closestMob);
                         }
@@ -464,6 +490,17 @@
                         proj.targetMob.hp -= proj.damage;
                         visualEffects.push({ type: "circle", x: proj.targetMob.x, y: proj.targetMob.y, radius: 16, color: proj.color, life: 10 });
                         visualEffects.push({ x: proj.targetMob.x, y: proj.targetMob.y - 14, text: `${proj.damage}`, color: "#ffffff", life: 20 });
+                        
+                        // INJEÇÃO ATIVA DE DEBUFFS VIA ACERTO DE PROJÉTEIS (EX: FLECHA PEÇONHENTA)
+                        if (proj.appliesDebuff) {
+                            proj.targetMob.activeDebuffs.push({
+                                type: proj.appliesDebuff,
+                                dmgPerSecond: proj.debuffDmg,
+                                duration: proj.debuffDuration
+                            });
+                            pushLog(`☣️ Veneno aplicado em ${proj.targetMob.name}!`);
+                        }
+
                         if (proj.targetMob.hp <= 0) handleMobDeath(proj.targetMob);
                     }
                     projectiles.splice(pIdx, 1);
@@ -484,13 +521,11 @@
 
                 let distToTarget = Math.hypot(targetX - mob.x, targetY - mob.y);
                 
-                // Movimentação inteligente em direção ao alvo de Agro ativo
                 if (distToTarget < 220 || mob.isBoss) {
                     let mx = targetX - mob.x; let my = targetY - mob.y;
                     mob.x += (mx / distToTarget) * 1.1; mob.y += (my / distToTarget) * 1.1;
                 }
 
-                // Ataques dos monstros aplicados ao alvo correto (Jogador ou Lacaio)
                 if (distToTarget < mob.radius + 14) {
                     let now = Date.now();
                     if (!mob.lastAtkTime || now - mob.lastAtkTime > 1000) {
@@ -531,7 +566,7 @@
                 }
             }
 
-            // REDERIZAÇÃO GRÁFICA NO CANVAS
+            // RENDERIZAÇÃO GRÁFICA NO CANVAS
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (dungeonState.active && mapMonsters.length === 0) {
                 ctx.fillStyle = "rgba(52, 199, 89, 0.35)"; ctx.beginPath(); ctx.arc(exitPortal.x, exitPortal.y, exitPortal.radius, 0, Math.PI*2); ctx.fill();
@@ -547,6 +582,12 @@
                 ctx.font = `${mob.radius * 1.5}px Arial`; ctx.fillText(mob.emoji, mob.x - mob.radius, mob.y + mob.radius/1.4);
                 ctx.fillStyle = "#333"; ctx.fillRect(mob.x - 14, mob.y - mob.radius - 6, 28, 3);
                 ctx.fillStyle = "#ff3b30"; ctx.fillRect(mob.x - 14, mob.y - mob.radius - 6, (mob.hp / mob.maxHp) * 28, 3);
+                
+                // Indicador visual de debuffs por cima da cabeça do monstro
+                if (mob.activeDebuffs.length > 0) {
+                    ctx.font = "10px Arial";
+                    ctx.fillText("🤢", mob.x - 6, mob.y - mob.radius - 10);
+                }
             });
 
             projectiles.forEach(proj => { ctx.fillStyle = proj.color; ctx.beginPath(); ctx.arc(proj.x, proj.y, proj.size, 0, Math.PI * 2); ctx.fill(); });
@@ -560,7 +601,6 @@
             requestAnimationFrame(gameLoop);
         }
 
-        // SISTEMA DE AGRO ATIVADO EM ATAQUES DE LONGE / CONTARE DE SELEÇÃO
         function handleCanvasClick(e) {
             if (!dungeonState.active || mapMonsters.length === 0) return;
             let rect = canvas.getBoundingClientRect(); let mX = e.clientX - rect.left; let mY = e.clientY - rect.top;
@@ -571,7 +611,6 @@
                 let damage = 5 + Math.floor(getEffectiveStat('str') * 0.7) + wBonus;
                 
                 if (player.currentClass === "Mago" || player.currentClass === "Arqueiro" || player.currentClass === "Administrador") {
-                    // DISPARA MÃO DO AGRO - Todos os monstros focam no player ao atacar à distância
                     mapMonsters.forEach(m => { m.agroTarget = null; });
                     projectiles.push({ id: Math.random(), x: player.x, y: player.y, speed: 7, size: 5, color: "#ffcc00", targetMob: target, damage: damage });
                 } else {
@@ -603,30 +642,28 @@
             checkXpGain(); renderInventory();
         }
 
-        // LIMITE DE SUMMONS ESCALONADO CONFORME O NÍVEL DO NECROMANTE
         function getSummonLimit() {
             if (player.currentClass !== "Necromante") return 99;
             return 2 + Math.floor(player.lvl / 15);
         }
 
-        // DISPARADOR DE SKILL VIA HOTBAR EQUIPADA E RECONFIGURÁVEL
+        // DISPARADOR ATIVO DE SKILLS (PROCESSA REDUÇÃO DE DANO E DEBUFFS DO VENENO REAL)
         function triggerSkillSlot(hotbarIndex) {
             let actualSkillIndex = equippedHotbar[hotbarIndex];
             let currentSkills = classSkillsData[player.currentClass];
             let skill = currentSkills[actualSkillIndex];
             let lvl = skillLevels[player.currentClass][actualSkillIndex];
 
-            if (lvl === 0) { pushLog("❌ Skill vazia ou bloqueada neste slot da hotbar!"); return; }
+            if (lvl === 0) { pushLog("❌ Skill bloqueada ou vazia neste atalho."); return; }
             if (player.mp < skill.cost) { pushLog("❌ Sem mana suficiente!"); return; }
 
             player.mp -= skill.cost;
             let currentStageName = skill.stages[lvl - 1];
             pushLog(`🔥 Conjuring: ${currentStageName}`);
 
-            // Chamada de Invocações Inteligentes (Necromante & Admin)
             if (skill.isSummon) {
                 if (activeSummons.length >= getSummonLimit() && !skill.isAdminSummon) {
-                    pushLog("⚠️ Limite de invocações alcançado! Suba de nível para expandir o limite.");
+                    pushLog("⚠️ Limite de invocações alcançado! Expanda seu nível.");
                     player.mp += skill.cost; return;
                 }
                 let tier = lvl - 1;
@@ -639,32 +676,57 @@
                 renderUI(); return;
             }
 
-            // Ativa o Agro do Mapa inteiro se for ataque à distância
-            if (skill.type === "projectile") {
-                mapMonsters.forEach(m => { m.agroTarget = null; });
-            }
-
             let dmgPower = Math.floor((15 + getEffectiveStat('mag') * 1.5) * skill.dmgMult * (1 + lvl * 0.3));
 
-            if (skill.type === "projectile" && mapMonsters.length > 0) {
-                projectiles.push({ id: Math.random(), x: player.x, y: player.y, speed: 8, size: 7, color: "#ff9500", targetMob: mapMonsters[0], damage: dmgPower });
+            if (skill.type === "projectile") {
+                mapMonsters.forEach(m => { m.agroTarget = null; }); // Atrai atenção dos monstros (Agro)
+                if (mapMonsters.length > 0) {
+                    projectiles.push({ 
+                        id: Math.random(), x: player.x, y: player.y, speed: 8, size: 7, color: skill.projType === "poison" ? "#34c759" : "#ff9500", 
+                        targetMob: mapMonsters[0], damage: dmgPower,
+                        appliesDebuff: skill.appliesDebuff,
+                        debuffDmg: skill.debuffDmg ? Math.floor(skill.debuffDmg * (1 + lvl * 0.4)) : 0,
+                        debuffDuration: skill.debuffDuration || 0
+                    });
+                }
             } else if (skill.isHeal) {
-                player.hp = Math.min(player.maxHp, player.hp + skill.amount);
+                let healAmt = skill.amount * lvl;
+                player.hp = Math.min(player.maxHp, player.hp + healAmt);
+                visualEffects.push({ x: player.x, y: player.y - 15, text: `💖 +${healAmt}`, color: "#34c759", life: 30 });
             } else if (skill.isBuff) {
-                player[skill.stat] += skill.amount;
+                let buffAmt = skill.amount * lvl;
+                player[skill.stat] += buffAmt;
+                pushLog(`⚡ Atributo [${skill.stat.toUpperCase()}] aumentado temporariamente em +${buffAmt}`);
             } else if (skill.type === "aoe") {
-                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 90, color: "#ff3b30", life: 12 });
+                visualEffects.push({ type: "circle", x: player.x, y: player.y, radius: 90, color: skill.appliesDebuff === "maldicao" ? "#a645ff" : "#ff3b30", life: 12 });
                 mapMonsters.forEach(m => {
-                    if (Math.hypot(player.x - m.x, player.y - m.y) < 100) { m.hp -= dmgPower; if(m.hp <= 0) handleMobDeath(m); }
+                    if (Math.hypot(player.x - m.x, player.y - m.y) < 100) { 
+                        m.hp -= dmgPower; 
+                        if (skill.appliesDebuff) {
+                            m.activeDebuffs.push({
+                                type: skill.appliesDebuff,
+                                dmgPerSecond: Math.floor(skill.debuffDmg * (1 + lvl * 0.4)),
+                                duration: skill.debuffDuration
+                            });
+                        }
+                        if(m.hp <= 0) handleMobDeath(m); 
+                    }
                 });
             } else if (skill.type === "melee" && mapMonsters.length > 0) {
-                mapMonsters[0].hp -= dmgPower;
-                if(mapMonsters[0].hp <= 0) handleMobDeath(mapMonsters[0]);
+                let m = mapMonsters[0];
+                m.hp -= dmgPower;
+                if (skill.appliesDebuff) {
+                    m.activeDebuffs.push({
+                        type: skill.appliesDebuff,
+                        dmgPerSecond: Math.floor(skill.debuffDmg * (1 + lvl * 0.4)),
+                        duration: skill.debuffDuration
+                    });
+                }
+                if(m.hp <= 0) handleMobDeath(m);
             }
             renderUI();
         }
 
-        // SISTEMA DE CUSTO EXPONENCIAL REQUISITADO: (Nv1:1, Nv2:5, Nv3:10, Nv4:15, Nv5:20)
         function getSkillUpgradeCost(currentLvl) {
             if (currentLvl === 0) return 1;
             if (currentLvl === 1) return 5;
@@ -686,7 +748,6 @@
             } else { pushLog("❌ Pontos insuficientes para esta elevação de nível!"); }
         }
 
-        // EQUIPAR SKILLS NA HOTBAR DINAMICAMENTE
         function equipSkillToHotbar(skillIdx, hotbarSlot) {
             equippedHotbar[hotbarSlot] = skillIdx;
             pushLog(`⚙️ Skill equipada no Atalho [${hotbarSlot + 1}]`);
@@ -711,20 +772,17 @@
             });
         }
 
-        // TRATAMENTO DO ITEM: EQUIPAR OU VENDER SE A TAB LOJA ESTIVER ABERTA
         function clickInventoryItem(index) {
             let item = player.inventory[index]; if (!item) return;
             
-            // SE O MODO LOJA ESTIVER ABERTO -> ELE VENDE O ITEM REQUISITADO
             if (document.getElementById('view-shop').style.display === 'block') {
                 let payout = Math.floor(item.price * 0.5) * item.qty;
                 player.gold += payout;
-                pushLog(`💰 Vendeu comercialmente ${item.qty}x ${item.name} por +$${payout} de Ouro.`);
+                pushLog(`💰 Vendeu ${item.qty}x ${item.name} por +$${payout} de Ouro.`);
                 player.inventory.splice(index, 1);
                 renderInventory(); renderUI(); return;
             }
 
-            // SE NÃO, FUNCIONA COMO USO OU EQUIPAMENTO COMUM
             if (item.itemType === "usable") {
                 if (item.name.includes("HP")) player.hp = Math.min(player.maxHp, player.hp + item.restore);
                 if (item.name.includes("MP")) player.mp = Math.min(player.maxMp, player.mp + item.restore);
@@ -812,10 +870,9 @@
         function checkXpGain() {
             if (player.xp >= player.nextXp) {
                 player.xp -= player.nextXp; player.lvl++; player.points += 6;
-                // GANHO MASSIVO DE PONTOS DE SKILL POR LEVEUP PARA BATER CUSTOS ALTOS
                 Object.keys(classSkillPoints).forEach(k => { classSkillPoints[k] += 8; });
                 player.maxHp += 15; player.hp = player.maxHp; player.nextXp = Math.floor(player.nextXp * 1.6);
-                renderSkillsTab(); pushLog(`⭐ LEVEL UP! Você evoluiu para o Nível ${player.lvl}! +8 Pontos de Habilidade.`);
+                renderSkillsTab(); pushLog(`⭐ LEVEL UP! Nível ${player.lvl}! +8 Pontos de Habilidade.`);
             }
         }
 
@@ -855,12 +912,11 @@
             });
         }
 
-        // SISTEMA DE ADMINISTRAÇÃO TOTALMENTE RECONSTRUÍDO
         function giveAllAdminLoots() {
             instances.forEach(inst => { inst.bossDrops.forEach(d => addItemToInventory(d.name, 50, "equip", 0, d.price, d.slot, d.bonus)); });
-            pushLog("⚙️ ADM: Todos os artefatos sagrados e drops de chefes injetados (+50).");
+            pushLog("⚙️ ADM: Todos os artefatos sagrados injetados (+50).");
         }
-        function admKillAllMobs() { mapMonsters = []; pushLog("⚙️ ADM: Purgou instantaneamente todos os inimigos da sala."); }
+        function admKillAllMobs() { mapMonsters = []; pushLog("⚙️ ADM: Purgou instantaneamente todos os inimigos."); }
         function admGodMode() { player.admGod = !player.admGod; pushLog(`⚙️ ADM: Modo Invulnerabilidade Definitiva: ${player.admGod ? 'ATIVADO' : 'DESATIVADO'}`); }
         
         function admModify(type) {
